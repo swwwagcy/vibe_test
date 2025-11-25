@@ -369,8 +369,18 @@
                 }
                 // ... (後面的 fetch 程式碼保持不變) ...
 
-                // 2. 呼叫 GAS API
-                const response = await fetch(`${API_URL}?user_id=${encodeURIComponent(userId)}`);
+                // --- 呼叫 API (修正版) ---
+                console.log("UserID Found:", userId);
+                
+                // ★★★ 修正開始：加入 options 設定 ★★★
+                const response = await fetch(`${API_URL}?user_id=${encodeURIComponent(userId)}`, {
+                    method: 'GET',
+                    redirect: 'follow', // 跟隨 Google 的轉址
+                    mode: 'cors',       // 跨域模式
+                    credentials: 'omit' // ★關鍵：不傳送 Cookie，避免被 iframe 安全性阻擋
+                });
+                // ★★★ 修正結束 ★★★
+
                 const json = await response.json();
                 
                 // 3. 處理結果
