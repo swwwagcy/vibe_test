@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>直播間遊戲天天返鑽石</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 2025 Dark Theme Palette */
+            --bg-body: #0B0E14;
+            --surface-glass: rgba(30, 35, 48, 0.75);
+            --surface-solid: #1C212E;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            
+            --accent-gold: #FACC15;
+            --accent-gold-glow: rgba(250, 204, 21, 0.25);
+            --accent-green: #34D399;
+            --accent-red: #F43F5E;
+            
+            --text-main: #FFFFFF;
+            --text-muted: #94A3B8;
+            --text-dim: #64748B;
+            --text-highlight: #E2E8F0;
+
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
+        }
+
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+        body {
+            margin: 0;
+            padding: 20px 16px;
+            background-color: var(--bg-body);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(244, 63, 94, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 90% 90%, rgba(250, 204, 21, 0.1) 0%, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            max-width: 480px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* --- Header --- */
+        .promo-header { text-align: center; margin-top: 10px; }
+        .promo-title {
+            margin: 0; font-size: 28px; font-weight: 800;
+            background: linear-gradient(135deg, #FFF 30%, var(--accent-gold) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 8px;
+        }
+        .promo-subtitle { font-size: 13px; color: var(--text-muted); margin: 0 0 16px 0; }
+        .game-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
+        .game-tag {
+            font-size: 12px; padding: 6px 12px; border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle);
+            color: var(--text-highlight); display: flex; align-items: center; gap: 4px;
+        }
+
+        /* --- Cards --- */
+        .card {
+            background: var(--surface-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);
+            overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); transition: transform 0.2s;
+        }
+        .hero-card {
+            padding: 24px 20px; text-align: center;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%);
+            border: 1px solid rgba(250, 204, 21, 0.3); box-shadow: 0 0 40px -10px var(--accent-gold-glow);
+        }
+        .hero-label { font-size: 13px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+        .hero-value { font-size: 48px; font-weight: 800; color: var(--accent-gold); text-shadow: 0 0 30px var(--accent-gold-glow); margin: 0; line-height: 1; font-variant-numeric: tabular-nums; }
+        
+        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .stat-card { display: flex; flex-direction: column; justify-content: center; padding: 20px 16px; }
+        .stat-label { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+        .stat-value { font-size: 20px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+        /* --- Progress Bar --- */
+        .progress-section { margin-top: 24px; text-align: left; }
+        .progress-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: var(--text-muted); font-weight: 600; }
+        .progress-track { height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-gold), #FFF); width: 0%; border-radius: 10px; transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); box-shadow: 0 0 15px var(--accent-gold-glow); }
+
+        /* --- Titles & Tables --- */
+        .section-title {
+            font-size: 15px; font-weight: 700; color: var(--text-highlight);
+            margin-bottom: 12px; padding-left: 4px; border-left: 3px solid var(--accent-gold); line-height: 1;
+        }
+        .tier-list { display: flex; flex-direction: column; gap: 10px; }
+        .tier-item { display: flex; justify-content: space-between; align-items: center; background: var(--surface-solid); padding: 14px 16px; border-radius: var(--radius-sm); border: 1px solid transparent; transition: all 0.3s; }
+        .tier-item.active { background: rgba(250, 204, 21, 0.1); border-color: rgba(250, 204, 21, 0.3); transform: scale(1.02); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .tier-range { font-size: 13px; color: var(--text-muted); }
+        .tier-rate { font-size: 16px; font-weight: 800; color: var(--text-main); }
+        .tier-item.active .tier-rate { color: var(--accent-gold); }
+
+        .history-card { padding: 0; }
+        .history-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+        .history-table th { background: rgba(255, 255, 255, 0.03); color: var(--text-muted); font-weight: 600; padding: 14px 16px; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid var(--border-subtle); }
+        .history-table td { padding: 14px 16px; border-bottom: 1px solid var(--border-subtle); color: var(--text-main); vertical-align: middle; }
+        .history-table tr:last-child td { border-bottom: none; }
+        .col-amount { text-align: right; font-family: 'JetBrains Mono', monospace; letter-spacing: -0.5px; }
+
+        .row-daily-total { background: rgba(250, 204, 21, 0.08) !important; }
+        .row-daily-total .col-game { color: var(--accent-gold); font-weight: 800; display: flex; align-items: center; gap: 8px; }
+        .row-daily-total .col-game::before { content: '∑'; font-weight: 400; opacity: 0.7; }
+        .row-daily-total .col-amount { color: var(--accent-gold); font-weight: 800; font-size: 14px; }
+        .date-dim { opacity: 0.2; font-family: serif; }
+
+        /* --- Footer --- */
+        .footer-rules { margin-top: 10px; padding: 24px 10px; border-top: 1px solid var(--border-subtle); color: var(--text-muted); }
+        .footer-title { font-size: 13px; font-weight: 700; color: var(--text-dim); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .rules-list { list-style: none; padding: 0; margin: 0; font-size: 12px; line-height: 1.8; color: var(--text-muted); }
+        .rules-list li { position: relative; padding-left: 14px; margin-bottom: 6px; }
+        .rules-list li::before { content: "•"; position: absolute; left: 0; color: var(--text-dim); }
+        .rule-highlight { color: var(--accent-gold); font-family: 'JetBrains Mono', monospace; background: rgba(250, 204, 21, 0.1); padding: 0 4px; border-radius: 4px; }
+        .copyright { margin-top: 30px; text-align: center; font-size: 10px; color: var(--text-dim); opacity: 0.6; }
+
+        /* --- Skeleton & Error --- */
+        .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%); background-size: 200% 100%; animation: pulse 1.5s infinite; color: transparent !important; border-radius: 4px; }
+        @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        
+        .error-msg { text-align: center; padding: 40px 20px; color: var(--text-muted); background: var(--surface-glass); border-radius: var(--radius-md); border: 1px dashed var(--border-subtle); }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <!-- Header -->
+        <header class="promo-header">
+            <h1 class="promo-title">直播間遊戲<br>天天返鑽石 💎</h1>
+            <p class="promo-subtitle">玩直播間任一款遊戲，天天返鑽石！</p>
+            <div class="game-tags">
+                <span class="game-tag">🐉 龍乳鬥白虎</span>
+                <span class="game-tag">💈 一柱擎天</span>
+                <span class="game-tag">🌪️ 金射狂風</span>
+            </div>
+        </header>
+
+        <!-- Main Stats -->
+        <main id="main-content">
+            <!-- Hero Card -->
+            <div class="card hero-card">
+                <div class="hero-label">✨ 預計明日返水 (鑽)</div>
+                <div class="hero-value skeleton" id="val-rebate">00,000</div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span id="tier-status">載入中...</span>
+                        <span id="next-diff">---</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bento Grid -->
+            <div class="bento-grid" style="margin-top: 16px;">
+                <div class="card stat-card">
+                    <div class="stat-label">今日下注總點數</div>
+                    <div class="stat-value skeleton" id="val-total">0</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-label">當前活動資格</div>
+                    <div class="stat-value" id="val-qualify" style="font-size: 14px;">---</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Rules Section -->
+        <section>
+            <div class="section-title">📊 鑽石回饋比例</div>
+            <div class="tier-list">
+                <div class="tier-item" id="tier-3">
+                    <div class="tier-range">1,000 萬以上</div>
+                    <div class="tier-rate">1.8%</div>
+                </div>
+                <div class="tier-item" id="tier-2">
+                    <div class="tier-range">100 萬 ~ 999 萬</div>
+                    <div class="tier-rate">1.4%</div>
+                </div>
+                <div class="tier-item" id="tier-1">
+                    <div class="tier-range">5,000 ~ 99 萬</div>
+                    <div class="tier-rate">0.7%</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section>
+            <div class="section-title">📅 近 3 日下注紀錄</div>
+            <div class="card history-card">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th width="20%">日期</th>
+                            <th width="45%">遊戲</th>
+                            <th width="35%" class="col-amount">下注總額</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-tbody">
+                        <tr>
+                            <td><div class="skeleton" style="width:30px; height:12px;"></div></td>
+                            <td><div class="skeleton" style="width:80px; height:12px;"></div></td>
+                            <td><div class="skeleton" style="width:50px; height:12px; float:right;"></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="skeleton" style="width:30px; height:12px;"></div></td>
+                            <td><div class="skeleton" style="width:80px; height:12px;"></div></td>
+                            <td><div class="skeleton" style="width:50px; height:12px; float:right;"></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Footer Info -->
+        <footer class="footer-rules">
+            <div class="footer-title">ℹ️ 活動說明</div>
+            <ul class="rules-list">
+                <li>活動期間，每日下注總額滿 <strong>5,000</strong> 鑽石即享鑽石返還。</li>
+                <li>活動期間日日返鑽，隔日 01:00 前發放至所屬帳號內。</li>
+                <li>舉例：<span class="rule-highlight">11/29 01:00</span> 前發放 11/28 全天的返鑽，時區為 UTC+8。</li>
+                <li>僅計直播間三款遊戲：「龍乳鬥白虎」、「一柱擎天」、「金射狂風」 的有效投注加總鑽石數。</li>
+                <li>返鑽數量四捨五入小數點後一位。舉例：前日下注 52,400 鑽次日返水為 52,400 * 0.7% = 366.8，實際將發放 <span class="rule-highlight">367</span> 鑽。</li>
+                <li>投注模式異常者，系統有權取消返鑽資格。</li>
+                <li>資料需登入帳號以正確顯示。</li>
+            </ul>
+            <div class="copyright">© 2025 SWAG. 保留修改、變更、解釋及取消活動之權利</div>
+        </footer>
+
+    </div>
+
+    <script>
+        // ★★★ 設定區：已更新為真實 API ★★★
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwRSX20cx5_AJoo1dgXtLHqJikuYVswLcE7--Edn0gWEHUGa25YvveNqSifc0UmRk0B/exec';
+
+        const fmt = (n) => new Intl.NumberFormat('en-US').format(n);
+
+        // 渲染主程式
+        function renderDashboard(data) {
+            // 1. 移除載入動畫
+            document.querySelectorAll('.skeleton').forEach(el => el.classList.remove('skeleton'));
+
+            // 2. 填入基礎數據
+            document.getElementById('val-rebate').innerText = fmt(data.est_rebate);
+            document.getElementById('val-total').innerText = fmt(data.total_bet);
+
+            // 3. 狀態與資格判定
+            const qEl = document.getElementById('val-qualify');
+            if (data.total_bet >= 5000) {
+                qEl.innerText = "✅ 符合資格";
+                qEl.style.color = "var(--accent-green)";
+            } else {
+                qEl.innerText = "⏳ 尚未達標";
+                qEl.style.color = "var(--text-muted)";
+            }
+
+            // 4. 進度條邏輯
+            document.getElementById('progress-bar').style.width = `${data.progress_percent}%`;
+            
+            let statusText = `當前層級 ${data.current_rate}%`;
+            let diffText = "";
+
+            if (data.next_tier_diff <= 0) {
+                diffText = "已達最高層級 🚀";
+                document.getElementById('next-diff').style.color = "var(--accent-gold)";
+            } else {
+                diffText = `差 ${fmt(data.next_tier_diff)} 升級`;
+            }
+            document.getElementById('tier-status').innerText = statusText;
+            document.getElementById('next-diff').innerText = diffText;
+
+            // 5. 自動高亮階梯表
+            document.querySelectorAll('.tier-item').forEach(el => el.classList.remove('active'));
+            if (data.total_bet >= 10000000) document.getElementById('tier-3').classList.add('active');
+            else if (data.total_bet >= 1000000) document.getElementById('tier-2').classList.add('active');
+            else if (data.total_bet >= 5000) document.getElementById('tier-1').classList.add('active');
+
+            // 6. 渲染歷史紀錄表格
+            const tbody = document.getElementById('history-tbody');
+            tbody.innerHTML = '';
+
+            if (!data.history_list || data.history_list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:20px; color:var(--text-muted);">尚無紀錄</td></tr>`;
+            } else {
+                let lastDate = '';
+
+                data.history_list.forEach(row => {
+                    const tr = document.createElement('tr');
+                    const isTotal = row.game_name === '當日加總';
+                    
+                    if (isTotal) tr.classList.add('row-daily-total');
+
+                    // 處理日期顯示：如果跟上一行一樣，且不是加總行，就顯示 " 符號
+                    let dateHtml = row.date_str;
+                    if (row.date_str === lastDate && !isTotal) {
+                        dateHtml = '<span class="date-dim">"</span>';
+                    } else {
+                        lastDate = row.date_str;
+                    }
+
+                    tr.innerHTML = `
+                        <td style="color: var(--text-muted);">${dateHtml}</td>
+                        <td class="col-game">${row.game_name}</td>
+                        <td class="col-amount">${fmt(row.amount)}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        // 啟動函數
+        async function init() {
+            try {
+                // 1. 取得網址參數
+                const params = new URLSearchParams(window.location.search);
+                const userId = params.get('user_id');
+
+                // 防呆：如果沒有 user_id，顯示提示
+                if (!userId) {
+                    document.querySelector('.dashboard-container').innerHTML = `
+                        <div class="error-msg">
+                            <h3>⚠️ 缺少用戶資訊</h3>
+                            <p>請確認網址是否包含 ?user_id=參數</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // 2. 呼叫 GAS API
+                const response = await fetch(`${API_URL}?user_id=${encodeURIComponent(userId)}`);
+                const json = await response.json();
+                
+                // 3. 處理結果
+                if (json.status === 'success') {
+                    renderDashboard(json.data);
+                } else {
+                    console.error("API Error:", json.message);
+                    document.querySelector('.dashboard-container').innerHTML = `
+                        <div class="error-msg">
+                            <h3>數據讀取失敗</h3>
+                            <p>${json.message}</p>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                console.error("Init Error:", e);
+                document.querySelector('.dashboard-container').innerHTML = `
+                    <div class="error-msg">
+                        <h3>連線錯誤</h3>
+                        <p>無法連接至資料庫，請稍後再試。</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 執行
+        init();
+    </script>
+</body>
+</html>
