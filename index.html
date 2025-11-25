@@ -322,23 +322,45 @@
             }
         }
 
-        // 啟動函數
+// 啟動函數
         async function init() {
             try {
-                // 1. 取得網址參數
-                const params = new URLSearchParams(window.location.search);
-                const userId = params.get('user_id');
+                // --- 修改開始：增強 User ID 讀取邏輯 ---
+                
+                let userId = null;
+
+                // 方法 1: 嘗試從標準問號參數 (?user_id=...) 讀取
+                const searchParams = new URLSearchParams(window.location.search);
+                if (searchParams.has('user_id')) {
+                    userId = searchParams.get('user_id');
+                }
+
+                // 方法 2: 如果找不到，嘗試從錨點參數 (#user_id=...) 讀取
+                // 這是為了防止 SWAG 平台過濾掉問號參數
+                if (!userId && window.location.hash) {
+                    // 移除開頭的 # 號
+                    const hashStr = window.location.hash.substring(1); 
+                    const hashParams = new URLSearchParams(hashStr);
+                    if (hashParams.has('user_id')) {
+                        userId = hashParams.get('user_id');
+                    }
+                }
+
+                // --- 修改結束 ---
 
                 // 防呆：如果沒有 user_id，顯示提示
                 if (!userId) {
+                    // ... (原本的錯誤處理代碼保持不變) ...
                     document.querySelector('.dashboard-container').innerHTML = `
                         <div class="error-msg">
                             <h3>⚠️ 缺少用戶資訊</h3>
-                            <p>請確認網址是否包含 ?user_id=參數</p>
+                            <p>無法讀取 User ID，請確認連結格式。</p>
                         </div>
                     `;
                     return;
                 }
+
+                // ... (後面的 fetch 程式碼保持不變) ...
 
                 // 2. 呼叫 GAS API
                 const response = await fetch(`${API_URL}?user_id=${encodeURIComponent(userId)}`);
