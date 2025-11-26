@@ -14,7 +14,7 @@
             --bg-body: #0B0E14;
             --surface-glass: rgba(30, 35, 48, 0.85);
             --surface-solid: #1C212E;
-            --border-subtle: rgba(255, 255, 255, 0.12); /* 統一的邊框顏色 */
+            --border-subtle: rgba(255, 255, 255, 0.12);
             --accent-gold: #FACC15;
             --accent-gold-dim: rgba(250, 204, 21, 0.15);
             --accent-gold-glow: rgba(250, 204, 21, 0.35);
@@ -124,7 +124,7 @@
         .tier-rate { font-size: 18px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
         .tier-item.active .tier-rate { color: var(--accent-gold); }
 
-        /* --- History Table (最終修正版) --- */
+        /* --- History Table (Box-Shadow 修正版) --- */
         .history-card { 
             padding: 0; 
             border: 1px solid var(--border-subtle); 
@@ -135,7 +135,6 @@
 
         .history-table { 
             width: 100%; 
-            /* 強制線條合併，確保筆直 */
             border-collapse: collapse; 
             border-spacing: 0;
             table-layout: fixed;
@@ -156,8 +155,8 @@
 
         .history-table td { 
             padding: 16px 16px; 
-            /* 統一所有格子的底線顏色 */
-            border-bottom: 1px solid var(--border-subtle) !important; 
+            /* 標準邊框 */
+            border-bottom: 1px solid var(--border-subtle); 
             color: var(--text-main); 
             vertical-align: middle; 
             white-space: nowrap;
@@ -179,28 +178,34 @@
         }
         
         /* 
-           ★ 修正重點：
-           1. 移除所有背景色 (background-color: transparent)
-           2. 移除所有特殊邊框顏色，沿用原本的 --border-subtle
-           3. 只改變文字顏色 (color) 與粗細
+           ★ 核心修正區 ★ 
+           使用 box-shadow 代替 border 來畫特殊行的線條。
+           box-shadow 不佔據空間，不會因為儲存格內容不同而錯位。
         */
 
-        /* 當日加總 (金色文字) */
+        /* 當日加總 (金色) */
         .row-daily-total td { 
             background-color: transparent !important;
             color: var(--accent-gold) !important; 
             font-weight: 800;
+            /* 隱藏原本的 border，改用 shadow 畫線 */
+            border-bottom: 0 !important;
+            /* inset 0 1px = 上邊線, inset 0 -1px = 下邊線 */
+            box-shadow: inset 0 1px 0 0 rgba(250, 204, 21, 0.4), 
+                        inset 0 -1px 0 0 rgba(250, 204, 21, 0.4);
         }
         .row-daily-total .col-game { display: flex; align-items: center; gap: 6px; font-size: 14px; }
         .row-daily-total .col-game::before { content: '∑'; font-weight: 400; opacity: 0.8; margin-right: 2px; font-size: 16px; }
-        /* 稍微加大字體以示區別 */
         .row-daily-total .col-amount { font-size: 16px; }
 
-        /* 當日返水 (綠色文字) */
+        /* 當日返水 (綠色) */
         .row-daily-rebate td { 
             background-color: transparent !important;
             color: var(--accent-green) !important; 
             font-weight: 800;
+            border-bottom: 0 !important;
+            box-shadow: inset 0 1px 0 0 rgba(52, 211, 153, 0.4), 
+                        inset 0 -1px 0 0 rgba(52, 211, 153, 0.4);
         }
         .row-daily-rebate .col-game { display: flex; align-items: center; gap: 6px; font-size: 14px; }
         .row-daily-rebate .col-game::before { content: '💎'; font-weight: 400; opacity: 0.9; margin-right: 2px; font-size: 14px; }
@@ -317,6 +322,7 @@
     </div>
 
     <script>
+        // ★★★ API (Cloud Run) ★★★
         const API_URL = 'https://game-rebate-api-905468082258.asia-east1.run.app';
 
         const fmt = (n) => new Intl.NumberFormat('en-US').format(n);
@@ -464,8 +470,9 @@
                     if (isTotal) tr.classList.add('row-daily-total');
                     if (isRebate) tr.classList.add('row-daily-rebate');
                     
-                    // 直接顯示所有日期
                     let dateHtml = row.date_str;
+                    // 在這裡移除隱藏日期的邏輯，讓日期總是顯示
+                    // if (row.date_str === lastDate && !isTotal && !isRebate) ... 
 
                     let displayGameName = t.game_map[row.game_name] || row.game_name;
                     tr.innerHTML = `<td style="color: var(--text-muted);">${dateHtml}</td><td class="col-game">${displayGameName}</td><td class="col-amount">${fmt(row.amount)}</td>`;
