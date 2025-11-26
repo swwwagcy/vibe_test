@@ -19,7 +19,7 @@
             --accent-gold-dim: rgba(250, 204, 21, 0.15);
             --accent-gold-glow: rgba(250, 204, 21, 0.35);
             --accent-green: #34D399;
-            --accent-green-dim: rgba(52, 211, 153, 0.15);
+            --accent-green-dim: rgba(52, 211, 153, 0.15); /* 新增綠色背景淡化 */
             --accent-red: #F43F5E;
             --text-main: #FFFFFF;
             --text-muted: #9CA3AF;
@@ -124,13 +124,46 @@
         .tier-rate { font-size: 18px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
         .tier-item.active .tier-rate { color: var(--accent-gold); }
 
-        /* --- History Table --- */
-        .history-card { padding: 0; border: 1px solid var(--border-subtle); }
-        .history-table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
-        .history-table th { background: rgba(255, 255, 255, 0.03); color: var(--text-muted); font-weight: 600; padding: 14px 16px; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid var(--border-subtle); }
-        .history-table td { padding: 16px 16px; border-bottom: 1px solid var(--border-subtle); color: var(--text-main); vertical-align: middle; }
-        .history-table tr:last-child td { border-bottom: none; }
-        .col-amount { text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600; letter-spacing: -0.5px; font-size: 15px; }
+        /* --- History Table (優化線條與排版) --- */
+        .history-card { 
+            padding: 0; 
+            border: 1px solid var(--border-subtle); 
+        }
+        .history-table { 
+            width: 100%; 
+            /* 確保邊框合併，這是解決線條斷裂的關鍵 */
+            border-collapse: collapse; 
+            font-size: 14px; 
+            text-align: left; 
+        }
+        .history-table th { 
+            background: rgba(255, 255, 255, 0.03); 
+            color: var(--text-muted); 
+            font-weight: 600; 
+            padding: 14px 16px; 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            /* 線條設定 */
+            border-bottom: 1px solid var(--border-subtle); 
+        }
+        .history-table td { 
+            padding: 16px 16px; 
+            /* 線條設定：確保每格都有底部邊框，除了最後一行 */
+            border-bottom: 1px solid var(--border-subtle); 
+            color: var(--text-main); 
+            vertical-align: middle; 
+        }
+        /* 移除最後一列的底線，避免與卡片邊框重疊 */
+        .history-table tr:last-child td { 
+            border-bottom: none; 
+        }
+        .col-amount { 
+            text-align: right; 
+            font-family: 'JetBrains Mono', monospace; 
+            font-weight: 600; 
+            letter-spacing: -0.5px; 
+            font-size: 15px; 
+        }
         
         /* 當日加總 Highlight (金色) */
         .row-daily-total { background: rgba(250, 204, 21, 0.06) !important; }
@@ -139,14 +172,12 @@
         .row-daily-total .col-amount { color: var(--accent-gold); font-weight: 800; font-size: 16px; }
 
         /* ★★★ 新增：當日返水 Highlight (綠色) ★★★ */
-        .row-daily-rebate { background: rgba(52, 211, 153, 0.06) !important; }
+        .row-daily-rebate { background: var(--accent-green-dim) !important; }
         .row-daily-rebate .col-game { color: var(--accent-green); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; }
         .row-daily-rebate .col-game::before { content: '💎'; font-weight: 400; opacity: 0.8; margin-right: 2px; font-size: 14px; }
         .row-daily-rebate .col-amount { color: var(--accent-green); font-weight: 800; font-size: 16px; }
         
-        .date-dim { opacity: 0.2; font-family: serif; }
-
-        /* --- Footer --- */
+        /* Footer */
         .footer-rules { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-subtle); color: var(--text-muted); }
         .footer-title { font-size: 14px; font-weight: 700; color: var(--text-dim); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
         .rules-list { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8; color: var(--text-muted); }
@@ -155,7 +186,7 @@
         .rule-highlight { color: var(--accent-gold); font-family: 'JetBrains Mono', monospace; background: var(--accent-gold-dim); padding: 2px 6px; border-radius: 4px; }
         .copyright { margin-top: 50px; text-align: center; font-size: 11px; color: var(--text-dim); opacity: 0.6; }
 
-        /* --- Utilities --- */
+        /* Utilities */
         .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%); background-size: 200% 100%; animation: pulse 1.5s infinite; color: transparent !important; border-radius: 4px; }
         .error-msg { text-align: center; padding: 30px 20px; color: var(--text-muted); background: rgba(255, 50, 50, 0.05); border-radius: var(--radius-md); border: 1px dashed rgba(255, 50, 50, 0.2); margin-top: 30px; font-size: 14px; line-height: 1.6; }
         @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
@@ -249,8 +280,8 @@
     </div>
 
     <script>
-        // ★★★ 請填入您的 Cloud Run API 網址 ★★★
-        const API_URL = '請將您的_Cloud_Run_網址貼在這裡';
+        // ★★★ API (Cloud Run) ★★★
+        const API_URL = 'https://game-rebate-api-987654321-de.a.run.app'; // 請確認此處為您的實際 API 網址
 
         const fmt = (n) => new Intl.NumberFormat('en-US').format(n);
         let cachedData = null; 
@@ -268,7 +299,6 @@
                 tier_current: '當前層級', tier_max: '已達最高層級 🚀', tier_diff: '差 {n} 升級', loading: '載入中...', no_record: '尚無紀錄',
                 err_missing_title: '⚠️ 缺少用戶資訊', err_missing_desc: '無法讀取 User ID，請確認連結格式。',
                 err_conn_title: '連線錯誤', err_conn_desc: '無法連接至伺服器，請稍後再試。', err_data_title: '數據讀取失敗',
-                // 這裡增加了 "當日返水" 的翻譯
                 game_map: { '龍乳鬥白虎': '龍乳鬥白虎', '一柱擎天': '一柱擎天', '金射狂風': '金射狂風', '當日加總': '當日加總', '當日返水': '當日返水' },
                 rules: ['活動期間，每日下注總額滿 <strong>5,000</strong> 鑽石即享鑽石返還。', '活動期間日日返鑽，隔日 01:00 前發放至所屬帳號內。', '舉例：<span class="rule-highlight">11/29 01:00</span> 前發放 11/28 全天的返鑽，時區為 UTC+8。', '僅計直播間三款遊戲：「龍乳鬥白虎」、「一柱擎天」、「金射狂風」 的有效投注加總鑽石數。', '返鑽數量四捨五入小數點後一位。舉例：前日下注 52,400 鑽次日返水為 52,400 * 0.7% = 366.8，實際將發放 <span class="rule-highlight">367</span> 鑽。', '投注模式異常者，系統有權取消返鑽資格。', '資料需登入帳號以正確顯示。']
             },
@@ -399,10 +429,8 @@
                     if (isTotal) tr.classList.add('row-daily-total');
                     if (isRebate) tr.classList.add('row-daily-rebate');
                     
+                    // 顯示所有日期，不做隱藏
                     let dateHtml = row.date_str;
-                    // 如果日期相同，且不是加總或返水行，則隱藏日期
-                    if (row.date_str === lastDate && !isTotal && !isRebate) dateHtml = '<span class="date-dim">"</span>';
-                    else lastDate = row.date_str;
 
                     let displayGameName = t.game_map[row.game_name] || row.game_name;
                     tr.innerHTML = `<td style="color: var(--text-muted);">${dateHtml}</td><td class="col-game">${displayGameName}</td><td class="col-amount">${fmt(row.amount)}</td>`;
