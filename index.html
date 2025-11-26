@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Diamond Rebate Dashboard</title>
     
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
@@ -42,7 +43,6 @@
                 radial-gradient(circle at 90% 90%, rgba(250, 204, 21, 0.08) 0%, transparent 50%);
             background-attachment: fixed;
             min-height: 100vh;
-            /* 維持內文較大字體，方便閱讀 */
             font-size: 14px;
         }
 
@@ -54,23 +54,22 @@
             gap: 24px; 
         }
 
-        /* --- Language Switcher (改回精緻小巧版) --- */
+        /* --- Language Switcher --- */
         .lang-switch-container {
             display: flex;
             justify-content: flex-end;
-            gap: 6px; /* 間距縮小 */
+            gap: 6px;
             width: 100%;
-            padding-bottom: 4px; /* 與下方距離縮小 */
+            padding-bottom: 4px;
         }
 
         .lang-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: var(--text-muted);
-            /* ★★★ 修改處：縮小尺寸 ★★★ */
-            padding: 4px 10px; 
-            border-radius: 14px; 
-            font-size: 11px; 
+            padding: 4px 10px;
+            border-radius: 14px;
+            font-size: 11px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -87,166 +86,57 @@
         }
 
         /* --- Header --- */
-        .promo-header { 
-            text-align: center; 
-            margin-bottom: 12px;
-        }
-        
+        .promo-header { text-align: center; margin-bottom: 12px; }
         .promo-title {
-            margin: 0 0 10px 0; 
-            font-size: 32px; 
-            font-weight: 900;
+            margin: 0 0 10px 0; font-size: 32px; font-weight: 900;
             background: linear-gradient(135deg, #FFF 40%, var(--accent-gold) 100%);
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px; 
-            line-height: 1.2;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px; line-height: 1.2;
         }
-        
-        .promo-subtitle { 
-            font-size: 14px; 
-            color: var(--text-muted); 
-            margin: 0 0 18px 0; 
-            line-height: 1.5;
-        }
-        
-        .game-tags { 
-            display: flex; 
-            justify-content: center; 
-            flex-wrap: wrap; 
-            gap: 8px; 
-        }
-        
+        .promo-subtitle { font-size: 14px; color: var(--text-muted); margin: 0 0 18px 0; line-height: 1.5; }
+        .game-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
         .game-tag {
-            font-size: 12px; 
-            padding: 5px 12px; 
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.05); 
-            border: 1px solid var(--border-subtle);
-            color: var(--text-highlight); 
-            display: flex; 
-            align-items: center; 
-            gap: 5px;
-            white-space: nowrap;
+            font-size: 12px; padding: 5px 12px; border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle);
+            color: var(--text-highlight); display: flex; align-items: center; gap: 5px; white-space: nowrap;
         }
 
-        /* --- Section Title --- */
+        /* --- Sections --- */
         .section-title {
-            font-size: 17px; 
-            font-weight: 700; 
-            color: var(--text-highlight);
-            margin-top: 16px; 
-            margin-bottom: 14px; 
-            padding-left: 10px; 
-            border-left: 4px solid var(--accent-gold); 
-            line-height: 1.2;
+            font-size: 17px; font-weight: 700; color: var(--text-highlight);
+            margin-top: 16px; margin-bottom: 14px; padding-left: 10px;
+            border-left: 4px solid var(--accent-gold); line-height: 1.2;
         }
 
-        /* --- Cards Common --- */
+        /* --- Cards --- */
         .card {
-            background: var(--surface-glass); 
-            backdrop-filter: blur(24px); 
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--border-subtle); 
-            border-radius: var(--radius-lg);
-            overflow: hidden; 
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); 
+            background: var(--surface-glass); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);
+            overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); 
         }
-
-        /* --- Hero Card --- */
         .hero-card {
-            padding: 28px 24px; 
-            text-align: center;
+            padding: 28px 24px; text-align: center;
             background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 100%);
-            border: 1px solid rgba(250, 204, 21, 0.3); 
-            box-shadow: 0 0 50px -10px rgba(250, 204, 21, 0.15);
+            border: 1px solid rgba(250, 204, 21, 0.3); box-shadow: 0 0 50px -10px rgba(250, 204, 21, 0.15);
         }
-        
-        .hero-label { 
-            font-size: 14px; 
-            color: var(--text-muted); 
-            letter-spacing: 1px; 
-            text-transform: uppercase; 
-            margin-bottom: 10px; 
-            font-weight: 600;
-        }
-        
-        .hero-value { 
-            font-size: 56px; 
-            font-weight: 800; 
-            color: var(--accent-gold); 
-            text-shadow: 0 0 30px var(--accent-gold-glow); 
-            margin: 0; 
-            line-height: 1; 
-            font-family: 'JetBrains Mono', monospace; 
-            letter-spacing: -2px;
-        }
+        .hero-label { font-size: 14px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-weight: 600; }
+        .hero-value { font-size: 56px; font-weight: 800; color: var(--accent-gold); text-shadow: 0 0 30px var(--accent-gold-glow); margin: 0; line-height: 1; font-family: 'JetBrains Mono', monospace; letter-spacing: -2px; }
 
-        /* --- Bento Grid --- */
-        .bento-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 14px; 
-            margin-top: 14px; 
-        }
-        
-        .stat-card { 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            padding: 20px 18px; 
-        }
-        
-        .stat-label { 
-            font-size: 13px; 
-            color: var(--text-muted); 
-            margin-bottom: 6px; 
-        }
-        
-        .stat-value { 
-            font-size: 22px; 
-            font-weight: 700; 
-            font-family: 'JetBrains Mono', monospace; 
-        }
+        /* --- Stats & Progress --- */
+        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .stat-card { display: flex; flex-direction: column; justify-content: center; padding: 20px 18px; }
+        .stat-label { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+        .stat-value { font-size: 22px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
 
-        /* --- Progress Bar --- */
         .progress-section { margin-top: 28px; text-align: left; }
-        .progress-header { 
-            display: flex; 
-            justify-content: space-between; 
-            margin-bottom: 10px; 
-            font-size: 13px; 
-            color: var(--text-muted); 
-            font-weight: 600; 
-        }
+        .progress-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; color: var(--text-muted); font-weight: 600; }
         .progress-track { height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-        .progress-fill { 
-            height: 100%; 
-            background: linear-gradient(90deg, var(--accent-gold), #FFF); 
-            width: 0%; 
-            border-radius: 10px; 
-            transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            box-shadow: 0 0 15px var(--accent-gold-glow); 
-        }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-gold), #FFF); width: 0%; border-radius: 10px; transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 0 15px var(--accent-gold-glow); }
 
         /* --- Tier List --- */
         .tier-list { display: flex; flex-direction: column; gap: 10px; }
-        .tier-item { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: var(--surface-solid); 
-            padding: 16px 18px; 
-            border-radius: var(--radius-sm); 
-            border: 1px solid transparent; 
-            transition: all 0.3s; 
-        }
-        .tier-item.active { 
-            background: var(--accent-gold-dim); 
-            border-color: rgba(250, 204, 21, 0.4); 
-            transform: scale(1.01); 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-        }
+        .tier-item { display: flex; justify-content: space-between; align-items: center; background: var(--surface-solid); padding: 16px 18px; border-radius: var(--radius-sm); border: 1px solid transparent; transition: all 0.3s; }
+        .tier-item.active { background: var(--accent-gold-dim); border-color: rgba(250, 204, 21, 0.4); transform: scale(1.01); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .tier-range { font-size: 14px; color: var(--text-muted); font-weight: 500; }
         .tier-rate { font-size: 18px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
         .tier-item.active .tier-rate { color: var(--accent-gold); }
@@ -254,95 +144,29 @@
         /* --- History Table --- */
         .history-card { padding: 0; border: 1px solid var(--border-subtle); }
         .history-table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
-        .history-table th { 
-            background: rgba(255, 255, 255, 0.03); 
-            color: var(--text-muted); 
-            font-weight: 600; 
-            padding: 14px 16px; 
-            font-size: 12px; 
-            text-transform: uppercase; 
-            border-bottom: 1px solid var(--border-subtle); 
-        }
-        .history-table td { 
-            padding: 16px 16px; 
-            border-bottom: 1px solid var(--border-subtle); 
-            color: var(--text-main); 
-            vertical-align: middle; 
-        }
+        .history-table th { background: rgba(255, 255, 255, 0.03); color: var(--text-muted); font-weight: 600; padding: 14px 16px; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid var(--border-subtle); }
+        .history-table td { padding: 16px 16px; border-bottom: 1px solid var(--border-subtle); color: var(--text-main); vertical-align: middle; }
         .history-table tr:last-child td { border-bottom: none; }
-        .col-amount { 
-            text-align: right; 
-            font-family: 'JetBrains Mono', monospace; 
-            font-weight: 600; 
-            letter-spacing: -0.5px; 
-            font-size: 15px; 
-        }
+        .col-amount { text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600; letter-spacing: -0.5px; font-size: 15px; }
         
         .row-daily-total { background: rgba(250, 204, 21, 0.06) !important; }
-        .row-daily-total .col-game { 
-            color: var(--accent-gold); 
-            font-weight: 800; 
-            display: flex; align-items: center; gap: 6px; 
-            font-size: 14px;
-        }
+        .row-daily-total .col-game { color: var(--accent-gold); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; }
         .row-daily-total .col-game::before { content: '∑'; font-weight: 400; opacity: 0.7; margin-right: 2px; font-size: 16px; }
         .row-daily-total .col-amount { color: var(--accent-gold); font-weight: 800; font-size: 16px; }
-        
         .date-dim { opacity: 0.2; font-family: serif; }
 
         /* --- Footer --- */
-        .footer-rules { 
-            margin-top: 40px; 
-            padding-top: 24px; 
-            border-top: 1px solid var(--border-subtle); 
-            color: var(--text-muted); 
-        }
-        .footer-title { 
-            font-size: 14px; 
-            font-weight: 700; 
-            color: var(--text-dim); 
-            margin-bottom: 16px; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-        }
-        .rules-list { 
-            list-style: none; padding: 0; margin: 0; 
-            font-size: 13px; 
-            line-height: 1.8; 
-            color: var(--text-muted); 
-        }
+        .footer-rules { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-subtle); color: var(--text-muted); }
+        .footer-title { font-size: 14px; font-weight: 700; color: var(--text-dim); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+        .rules-list { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8; color: var(--text-muted); }
         .rules-list li { position: relative; padding-left: 16px; margin-bottom: 10px; }
         .rules-list li::before { content: "•"; position: absolute; left: 0; color: var(--text-dim); font-size: 16px; line-height: 1.2; }
-        .rule-highlight { 
-            color: var(--accent-gold); 
-            font-family: 'JetBrains Mono', monospace; 
-            background: var(--accent-gold-dim); 
-            padding: 2px 6px; 
-            border-radius: 4px; 
-        }
+        .rule-highlight { color: var(--accent-gold); font-family: 'JetBrains Mono', monospace; background: var(--accent-gold-dim); padding: 2px 6px; border-radius: 4px; }
         .copyright { margin-top: 50px; text-align: center; font-size: 11px; color: var(--text-dim); opacity: 0.6; }
 
         /* --- Utilities --- */
-        .skeleton { 
-            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%); 
-            background-size: 200% 100%; 
-            animation: pulse 1.5s infinite; 
-            color: transparent !important; 
-            border-radius: 4px; 
-        }
-        
-        .error-msg { 
-            text-align: center; 
-            padding: 30px 20px; 
-            color: var(--text-muted); 
-            background: rgba(255, 50, 50, 0.05); 
-            border-radius: var(--radius-md); 
-            border: 1px dashed rgba(255, 50, 50, 0.2); 
-            margin-top: 30px; 
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
+        .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%); background-size: 200% 100%; animation: pulse 1.5s infinite; color: transparent !important; border-radius: 4px; }
+        .error-msg { text-align: center; padding: 30px 20px; color: var(--text-muted); background: rgba(255, 50, 50, 0.05); border-radius: var(--radius-md); border: 1px dashed rgba(255, 50, 50, 0.2); margin-top: 30px; font-size: 14px; line-height: 1.6; }
         @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
@@ -360,7 +184,6 @@
 
         <!-- APP Content -->
         <div id="app-content">
-            
             <!-- 2. Header -->
             <header class="promo-header">
                 <h1 class="promo-title" data-i18n="title">直播間遊戲<br>天天返鑽石 💎</h1>
@@ -374,11 +197,9 @@
 
             <!-- 3. Main Stats -->
             <main>
-                <!-- Hero Card -->
                 <div class="card hero-card">
                     <div class="hero-label" data-i18n="hero_label">✨ 預計明日返水 (鑽)</div>
                     <div class="hero-value skeleton" id="val-rebate">00,000</div>
-                    
                     <div class="progress-section">
                         <div class="progress-header">
                             <span id="tier-status">Loading...</span>
@@ -390,7 +211,6 @@
                     </div>
                 </div>
 
-                <!-- Bento Grid (下方雙卡片) -->
                 <div class="bento-grid">
                     <div class="card stat-card">
                         <div class="stat-label" data-i18n="daily_bet_label">今日下注總點數</div>
@@ -457,11 +277,9 @@
                 <div class="copyright">© 2025 SWAG. All Rights Reserved.</div>
             </footer>
         </div>
-
     </div>
 
     <script>
-        // ★★★ API (GAS) ★★★
         const API_URL = 'https://script.google.com/macros/s/AKfycbwRSX20cx5_AJoo1dgXtLHqJikuYVswLcE7--Edn0gWEHUGa25YvveNqSifc0UmRk0B/exec';
 
         const fmt = (n) => new Intl.NumberFormat('en-US').format(n);
@@ -481,12 +299,13 @@
                 status_label: '當前活動資格',
                 rate_title: '📊 鑽石回饋比例',
                 tier_3_range: '1,000 萬以上',
-                tier_2_range: '1,000,000 ~ 9,999,999',
-                tier_1_range: '5,000 ~ 999,999',
+                tier_2_range: '100 萬 ~ 999 萬',
+                tier_1_range: '5,000 ~ 99 萬',
                 history_title: '📅 近 3 日下注紀錄',
                 table_date: '日期',
                 table_game: '遊戲',
                 table_amount: '下注總額',
+                table_rebate_label: '💰 返水',
                 footer_title: 'ℹ️ 活動說明',
                 qualify_yes: '✅ 符合資格',
                 qualify_no: '⏳ 尚未達標',
@@ -522,12 +341,13 @@
                 status_label: '当前活动资格',
                 rate_title: '📊 钻石回馈比例',
                 tier_3_range: '1,000 万以上',
-                tier_2_range: '1,000,000 ~ 9,999,999',
-                tier_1_range: '5,000 ~ 999,999',
+                tier_2_range: '100 万 ~ 999 万',
+                tier_1_range: '5,000 ~ 99 万',
                 history_title: '📅 近 3 日下注纪录',
                 table_date: '日期',
                 table_game: '游戏',
                 table_amount: '下注总额',
+                table_rebate_label: '💰 返水',
                 footer_title: 'ℹ️ 活动说明',
                 qualify_yes: '✅ 符合资格',
                 qualify_no: '⏳ 尚未达标',
@@ -563,12 +383,13 @@
                 status_label: 'Eligibility',
                 rate_title: '📊 Rebate Rates',
                 tier_3_range: '10M+',
-                tier_2_range: '1,000,000 ~ 9,999,999',
-                tier_1_range: '5,000 ~ 999,999',
+                tier_2_range: '1M ~ 9.99M',
+                tier_1_range: '5K ~ 990K',
                 history_title: '📅 Last 3 Days Records',
                 table_date: 'Date',
                 table_game: 'Game',
                 table_amount: 'Total Bet',
+                table_rebate_label: '💰 Rebate',
                 footer_title: 'ℹ️ Rules',
                 qualify_yes: '✅ Qualified',
                 qualify_no: '⏳ Not Qualified',
@@ -604,12 +425,13 @@
                 status_label: '現在のステータス',
                 rate_title: '📊 還元率テーブル',
                 tier_3_range: '1,000 万以上',
-                tier_2_range: '1,000,000 ~ 9,999,999',
-                tier_1_range: '5,000 ~ 999,999',
+                tier_2_range: '100 万 ~ 999 万',
+                tier_1_range: '5,000 ~ 99 万',
                 history_title: '📅 過去 3 日間の履歴',
                 table_date: '日付',
                 table_game: 'ゲーム',
                 table_amount: '総ベット',
+                table_rebate_label: '💰 還元',
                 footer_title: 'ℹ️ イベント詳細',
                 qualify_yes: '✅ 対象',
                 qualify_no: '⏳ 未達',
@@ -764,10 +586,24 @@
 
                     let displayGameName = t.game_map[row.game_name] || row.game_name;
 
+                    // 返水顯示邏輯
+                    let amountHtml = fmt(row.amount);
+                    if (isTotal && row.rebate > 0) {
+                        amountHtml += `
+                            <div style="
+                                font-size: 12px; 
+                                color: var(--accent-green); 
+                                margin-top: 4px; 
+                                font-weight: 500;">
+                                ${t.table_rebate_label}: ${fmt(row.rebate)}
+                            </div>
+                        `;
+                    }
+
                     tr.innerHTML = `
                         <td style="color: var(--text-muted);">${dateHtml}</td>
                         <td class="col-game">${displayGameName}</td>
-                        <td class="col-amount">${fmt(row.amount)}</td>
+                        <td class="col-amount">${amountHtml}</td>
                     `;
                     tbody.appendChild(tr);
                 });
@@ -788,37 +624,4 @@
                     try {
                         const decodedUrl = decodeURIComponent(currentUrl);
                         const matchDecoded = decodedUrl.match(regex);
-                        if (matchDecoded && matchDecoded[1]) userId = matchDecoded[1];
-                    } catch (e) {}
-                }
-
-                if (!userId) {
-                    showError('missing');
-                    return;
-                }
-
-                const response = await fetch(`${API_URL}?user_id=${encodeURIComponent(userId)}`, {
-                    method: 'GET',
-                    redirect: 'follow',
-                    mode: 'cors',      
-                    credentials: 'omit'
-                });
-                const json = await response.json();
-                
-                if (json.status === 'success') {
-                    renderDashboard(json.data);
-                } else {
-                    console.error("API Error:", json.message);
-                    showError('data', json.message);
-                }
-
-            } catch (e) {
-                console.error("Init Error:", e);
-                showError('connection', e.toString());
-            }
-        }
-
-        init();
-    </script>
-</body>
-</html>
+                        if (matchDecoded && matchDecoded[1]) userId = matchD
