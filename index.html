@@ -49,18 +49,16 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            /* 區塊垂直間距 */
             gap: 20px; 
         }
 
-        /* --- 語言切換 (修正：改為獨立區塊，不再懸浮) --- */
+        /* --- Language Switcher --- */
         .lang-switch-container {
             display: flex;
-            justify-content: flex-end; /* 靠右 */
+            justify-content: flex-end;
             gap: 6px;
             width: 100%;
-            padding-bottom: 4px; /* 與標題拉開一點點距離 */
-            /* 這裡不使用 absolute，讓它佔據實體空間，自然推擠下方內容 */
+            padding-bottom: 4px;
         }
 
         .lang-btn {
@@ -88,7 +86,6 @@
         /* --- Header --- */
         .promo-header { 
             text-align: center; 
-            /* 確保遊戲標籤與下方卡片有足夠距離 */
             margin-bottom: 10px;
         }
         
@@ -110,13 +107,7 @@
             line-height: 1.5;
         }
         
-        .game-tags { 
-            display: flex; 
-            justify-content: center; 
-            flex-wrap: wrap; /* 允許換行，防止手機版超出螢幕 */
-            gap: 8px; 
-        }
-        
+        .game-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
         .game-tag {
             font-size: 11px; 
             padding: 4px 10px; 
@@ -127,15 +118,14 @@
             display: flex; 
             align-items: center; 
             gap: 4px;
-            white-space: nowrap; /* 防止標籤內部換行 */
+            white-space: nowrap;
         }
 
-        /* --- Sections (標題排版優化) --- */
+        /* --- Section Title --- */
         .section-title {
             font-size: 15px; 
             font-weight: 700; 
             color: var(--text-highlight);
-            /* 上方間距加強，避免標題撞到上面的卡片 */
             margin-top: 12px; 
             margin-bottom: 12px; 
             padding-left: 8px; 
@@ -143,7 +133,7 @@
             line-height: 1.2;
         }
 
-        /* --- Cards Common --- */
+        /* --- Cards --- */
         .card {
             background: var(--surface-glass); 
             backdrop-filter: blur(20px); 
@@ -161,13 +151,21 @@
             background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 100%);
             border: 1px solid rgba(250, 204, 21, 0.3); 
             box-shadow: 0 0 40px -10px rgba(250, 204, 21, 0.15);
+            /* margin-bottom 不需要，因為我們在下方的 bento-grid 加了 margin-top */
         }
         
         .hero-label { font-size: 12px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
         .hero-value { font-size: 46px; font-weight: 800; color: var(--accent-gold); text-shadow: 0 0 30px var(--accent-gold-glow); margin: 0; line-height: 1; font-family: 'JetBrains Mono', monospace; letter-spacing: -2px; }
 
-        /* --- Bento Grid --- */
-        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 0; }
+        /* --- Bento Grid (修正處：增加 margin-top) --- */
+        .bento-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 12px; 
+            /* ★★★ 關鍵修正：與上方 Hero Card 拉開距離 ★★★ */
+            margin-top: 16px; 
+        }
+        
         .stat-card { display: flex; flex-direction: column; justify-content: center; padding: 18px 16px; }
         .stat-label { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
         .stat-value { font-size: 18px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
@@ -218,7 +216,7 @@
 
     <div class="dashboard-container">
         
-        <!-- 1. Language Switcher (獨立列，靠右，不懸浮) -->
+        <!-- 1. Language Switcher -->
         <div class="lang-switch-container">
             <button class="lang-btn active" onclick="changeLang('zh-TW')">繁</button>
             <button class="lang-btn" onclick="changeLang('zh-CN')">简</button>
@@ -226,10 +224,10 @@
             <button class="lang-btn" onclick="changeLang('jp')">JP</button>
         </div>
 
-        <!-- APP Content Wrapper -->
+        <!-- APP Content -->
         <div id="app-content">
             
-            <!-- 2. Header (標題與遊戲標籤) -->
+            <!-- 2. Header -->
             <header class="promo-header">
                 <h1 class="promo-title" data-i18n="title">直播間遊戲<br>天天返鑽石 💎</h1>
                 <p class="promo-subtitle" data-i18n="subtitle">玩直播間任一款遊戲，天天返鑽石！</p>
@@ -240,7 +238,7 @@
                 </div>
             </header>
 
-            <!-- 3. Main Stats (核心數據) -->
+            <!-- 3. Main Stats -->
             <main>
                 <!-- Hero Card -->
                 <div class="card hero-card">
@@ -258,7 +256,7 @@
                     </div>
                 </div>
 
-                <!-- Bento Grid -->
+                <!-- Bento Grid (下方雙卡片) -->
                 <div class="bento-grid">
                     <div class="card stat-card">
                         <div class="stat-label" data-i18n="daily_bet_label">今日下注總點數</div>
@@ -271,7 +269,7 @@
                 </div>
             </main>
 
-            <!-- 4. Rebate Rates Table (回饋比例) -->
+            <!-- 4. Rates -->
             <section>
                 <div class="section-title" data-i18n="rate_title">📊 鑽石回饋比例</div>
                 <div class="tier-list">
@@ -290,7 +288,7 @@
                 </div>
             </section>
 
-            <!-- 5. History Section (歷史紀錄) -->
+            <!-- 5. History -->
             <section>
                 <div class="section-title" data-i18n="history_title">📅 近 3 日下注紀錄</div>
                 <div class="card history-card">
@@ -318,18 +316,17 @@
                 </div>
             </section>
 
-            <!-- 6. Footer Rules (活動說明) -->
+            <!-- 6. Footer -->
             <footer class="footer-rules">
                 <div class="footer-title" data-i18n="footer_title">ℹ️ 活動說明</div>
                 <ul class="rules-list" id="footer-rules-list"></ul>
                 <div class="copyright">© 2025 SWAG. All Rights Reserved.</div>
             </footer>
-        </div> <!-- End app-content -->
+        </div>
 
     </div>
 
     <script>
-        // ★★★ 已更新為您指定的 GAS API ★★★
         const API_URL = 'https://script.google.com/macros/s/AKfycbwRSX20cx5_AJoo1dgXtLHqJikuYVswLcE7--Edn0gWEHUGa25YvveNqSifc0UmRk0B/exec';
 
         const fmt = (n) => new Intl.NumberFormat('en-US').format(n);
@@ -337,7 +334,6 @@
         let currentLang = 'zh-TW';
         let currentError = null; 
 
-        // --- 多語系字典 ---
         const TRANSLATIONS = {
             'zh-TW': {
                 title: '直播間遊戲<br>天天返鑽石 💎',
@@ -649,7 +645,6 @@
             try {
                 let userId = null;
                 const currentUrl = window.location.href;
-                // 暴力搜尋 ID
                 const regex = /(?:[?&#/]|^)user_id=([^&#]*)/i;
                 const match = currentUrl.match(regex);
                 if (match && match[1]) userId = match[1];
