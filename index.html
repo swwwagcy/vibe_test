@@ -202,25 +202,20 @@
         .tier-rate { font-size: 18px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
         .tier-item.active .tier-rate { color: var(--accent-gold); }
 
-/* --- History Table (最終完美修正版) --- */
+/* --- History Table (無縫隙色塊修正版) --- */
         .history-card { 
-            /* 1. 外框設定由 Card 負責 */
             padding: 0; 
             border: 1px solid var(--border-subtle); 
             border-radius: var(--radius-lg);
-            /* 2. 關鍵：利用 overflow: hidden 強制裁切內部表格的直角，達成圓角效果 */
-            overflow: hidden; 
-            /* 確保背景一致 */
+            overflow: hidden; /* 裁切圓角 */
             background: var(--surface-glass);
         }
 
         .history-table { 
             width: 100%; 
-            /* 3. 關鍵：改回 collapse，讓線條合併，消除任何縫隙 */
+            /* 關鍵：使用 collapse 讓線條合併 */
             border-collapse: collapse; 
             border-spacing: 0;
-            
-            /* 固定欄寬，確保對齊 */
             table-layout: fixed;
             font-size: 14px; 
             text-align: left; 
@@ -233,14 +228,13 @@
             padding: 14px 16px; 
             font-size: 12px; 
             text-transform: uppercase; 
-            /* 標題底線 */
             border-bottom: 1px solid var(--border-subtle); 
             white-space: nowrap;
         }
 
         .history-table td { 
             padding: 16px 16px; 
-            /* 內文底線 */
+            /* 預設底線顏色 */
             border-bottom: 1px solid var(--border-subtle); 
             color: var(--text-main); 
             vertical-align: middle; 
@@ -249,7 +243,7 @@
             text-overflow: ellipsis;
         }
 
-        /* 4. 移除最後一列的底線，避免與卡片外框重疊變粗 */
+        /* 移除最後一列的底線 */
         .history-table tr:last-child td { 
             border-bottom: none; 
         }
@@ -262,42 +256,31 @@
             font-size: 15px; 
         }
         
-        /* --- 特殊行樣式 (針對 collapse 模式優化) --- */
+        /* --- 特殊行樣式 (修正：讓邊框顏色與背景一致，消除縫隙) --- */
         
         /* 當日加總 (金色) */
-        .row-daily-total {
-            /* 直接設在 tr 或是透過 td 覆蓋都可以，這裡確保 td 背景填滿 */
-            background-color: rgba(250, 204, 21, 0.06);
-        }
         .row-daily-total td { 
+            /* 背景色 */
             background-color: rgba(250, 204, 21, 0.06) !important; 
+            /* 關鍵修正：將邊框改成與背景同色，這樣線條就會消失 */
+            border-bottom: 1px solid rgba(250, 204, 21, 0.06) !important;
+            border-top: 1px solid rgba(250, 204, 21, 0.06) !important;
         }
-        .row-daily-total .col-game { 
-            color: var(--accent-gold); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; 
-        }
-        .row-daily-total .col-game::before { 
-            content: '∑'; font-weight: 400; opacity: 0.7; margin-right: 2px; font-size: 16px; 
-        }
-        .row-daily-total .col-amount { 
-            color: var(--accent-gold); font-weight: 800; font-size: 16px; 
-        }
+        .row-daily-total .col-game { color: var(--accent-gold); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; }
+        .row-daily-total .col-game::before { content: '∑'; font-weight: 400; opacity: 0.7; margin-right: 2px; font-size: 16px; }
+        .row-daily-total .col-amount { color: var(--accent-gold); font-weight: 800; font-size: 16px; }
 
         /* 當日返水 (綠色) */
-        .row-daily-rebate {
-            background-color: var(--accent-green-dim);
-        }
         .row-daily-rebate td { 
-            background-color: var(--accent-green-dim) !important; 
+            /* 背景色 */
+            background-color: rgba(52, 211, 153, 0.15) !important; /* 直接寫死數值避免變數解析誤差 */
+            /* 關鍵修正：將邊框改成與背景同色 */
+            border-bottom: 1px solid rgba(52, 211, 153, 0.15) !important;
+            border-top: 1px solid rgba(52, 211, 153, 0.15) !important;
         }
-        .row-daily-rebate .col-game { 
-            color: var(--accent-green); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; 
-        }
-        .row-daily-rebate .col-game::before { 
-            content: '💎'; font-weight: 400; opacity: 0.8; margin-right: 2px; font-size: 14px; 
-        }
-        .row-daily-rebate .col-amount { 
-            color: var(--accent-green); font-weight: 800; font-size: 16px; 
-        }
+        .row-daily-rebate .col-game { color: var(--accent-green); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; }
+        .row-daily-rebate .col-game::before { content: '💎'; font-weight: 400; opacity: 0.8; margin-right: 2px; font-size: 14px; }
+        .row-daily-rebate .col-amount { color: var(--accent-green); font-weight: 800; font-size: 16px; }
         
         .date-dim { opacity: 0.2; font-family: serif; }
         
