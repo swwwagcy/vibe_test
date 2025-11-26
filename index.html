@@ -14,7 +14,7 @@
             --bg-body: #0B0E14;
             --surface-glass: rgba(30, 35, 48, 0.85);
             --surface-solid: #1C212E;
-            --border-subtle: rgba(255, 255, 255, 0.12);
+            --border-subtle: rgba(255, 255, 255, 0.12); /* 統一的邊框顏色 */
             --accent-gold: #FACC15;
             --accent-gold-dim: rgba(250, 204, 21, 0.15);
             --accent-gold-glow: rgba(250, 204, 21, 0.35);
@@ -124,23 +124,20 @@
         .tier-rate { font-size: 18px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
         .tier-item.active .tier-rate { color: var(--accent-gold); }
 
-        /* --- History Table (完全重寫) --- */
+        /* --- History Table (最終修正版) --- */
         .history-card { 
             padding: 0; 
-            /* 外框邊線 */
             border: 1px solid var(--border-subtle); 
             border-radius: var(--radius-lg);
-            /* 裁切圓角 */
             overflow: hidden; 
-            background: transparent;
+            background: var(--surface-glass);
         }
 
         .history-table { 
             width: 100%; 
-            /* 確保線條合併，最穩定的做法 */
+            /* 強制線條合併，確保筆直 */
             border-collapse: collapse; 
             border-spacing: 0;
-            /* 固定欄寬比例 */
             table-layout: fixed;
             font-size: 14px; 
             text-align: left; 
@@ -153,15 +150,14 @@
             padding: 14px 16px; 
             font-size: 12px; 
             text-transform: uppercase; 
-            /* 表頭底線 */
             border-bottom: 1px solid var(--border-subtle); 
             white-space: nowrap;
         }
 
         .history-table td { 
             padding: 16px 16px; 
-            /* 一般行的底線 */
-            border-bottom: 1px solid var(--border-subtle); 
+            /* 統一所有格子的底線顏色 */
+            border-bottom: 1px solid var(--border-subtle) !important; 
             color: var(--text-main); 
             vertical-align: middle; 
             white-space: nowrap;
@@ -169,7 +165,7 @@
             text-overflow: ellipsis;
         }
 
-        /* 移除最後一行的底線，避免與外框重疊 */
+        /* 移除最後一列的底線 */
         .history-table tr:last-child td { 
             border-bottom: none !important; 
         }
@@ -183,65 +179,35 @@
         }
         
         /* 
-           ★ 關鍵修正：色塊行樣式 
-           將 border-bottom 顏色設為與背景色相同，
-           這樣線條就會「消失」在背景中，形成無縫色塊。
+           ★ 修正重點：
+           1. 移除所有背景色 (background-color: transparent)
+           2. 移除所有特殊邊框顏色，沿用原本的 --border-subtle
+           3. 只改變文字顏色 (color) 與粗細
         */
 
-    /* --- 特殊行樣式 (修正版：移除背景，改用螢光文字) --- */
-        
-        /* 當日加總 (金色螢光) */
+        /* 當日加總 (金色文字) */
         .row-daily-total td { 
-            /* 移除背景色，解決線條問題 */
-            background-color: transparent !important; 
-            /* 讓文字變金色 */
+            background-color: transparent !important;
             color: var(--accent-gold) !important; 
             font-weight: 800;
-            /* 上下邊框稍微亮一點，做區隔 */
-            border-top: 1px solid rgba(250, 204, 21, 0.3) !important;
-            border-bottom: 1px solid rgba(250, 204, 21, 0.3) !important;
         }
-        
-        .row-daily-total .col-game { 
-            display: flex; align-items: center; gap: 6px; font-size: 14px; 
-        }
-        
-        /* 為了讓它更像重點，可以加一點點文字發光效果 (可選) */
-        .row-daily-total .col-amount,
-        .row-daily-total .col-game {
-            text-shadow: 0 0 10px rgba(250, 204, 21, 0.2);
-        }
+        .row-daily-total .col-game { display: flex; align-items: center; gap: 6px; font-size: 14px; }
+        .row-daily-total .col-game::before { content: '∑'; font-weight: 400; opacity: 0.8; margin-right: 2px; font-size: 16px; }
+        /* 稍微加大字體以示區別 */
+        .row-daily-total .col-amount { font-size: 16px; }
 
-        .row-daily-total .col-game::before { 
-            content: '∑'; font-weight: 400; opacity: 0.8; margin-right: 2px; font-size: 16px; 
-        }
-
-
-        /* 當日返水 (綠色螢光) */
+        /* 當日返水 (綠色文字) */
         .row-daily-rebate td { 
-            /* 移除背景色 */
-            background-color: transparent !important; 
-            /* 讓文字變綠色 */
+            background-color: transparent !important;
             color: var(--accent-green) !important; 
             font-weight: 800;
-            /* 邊框配色 */
-            border-top: 1px solid rgba(52, 211, 153, 0.3) !important;
-            border-bottom: 1px solid rgba(52, 211, 153, 0.3) !important;
         }
+        .row-daily-rebate .col-game { display: flex; align-items: center; gap: 6px; font-size: 14px; }
+        .row-daily-rebate .col-game::before { content: '💎'; font-weight: 400; opacity: 0.9; margin-right: 2px; font-size: 14px; }
+        .row-daily-rebate .col-amount { font-size: 16px; }
         
-        .row-daily-rebate .col-game { 
-            display: flex; align-items: center; gap: 6px; font-size: 14px; 
-        }
+        .date-dim { opacity: 0.2; font-family: serif; }
 
-        .row-daily-rebate .col-amount,
-        .row-daily-rebate .col-game {
-            text-shadow: 0 0 10px rgba(52, 211, 153, 0.2);
-        }
-
-        .row-daily-rebate .col-game::before { 
-            content: '💎'; font-weight: 400; opacity: 1; margin-right: 2px; font-size: 14px; 
-        }
-        
         /* Footer */
         .footer-rules { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-subtle); color: var(--text-muted); }
         .footer-title { font-size: 14px; font-weight: 700; color: var(--text-dim); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
@@ -336,7 +302,6 @@
                             </tr>
                         </thead>
                         <tbody id="history-tbody">
-                            <!-- 骨架屏 -->
                             <tr><td><div class="skeleton" style="width:30px; height:12px;"></div></td><td><div class="skeleton" style="width:80px; height:12px;"></div></td><td><div class="skeleton" style="width:50px; height:12px; float:right;"></div></td></tr>
                             <tr><td><div class="skeleton" style="width:30px; height:12px;"></div></td><td><div class="skeleton" style="width:80px; height:12px;"></div></td><td><div class="skeleton" style="width:50px; height:12px; float:right;"></div></td></tr>
                         </tbody>
@@ -352,7 +317,6 @@
     </div>
 
     <script>
-        // ★★★ API (Cloud Run) ★★★
         const API_URL = 'https://game-rebate-api-905468082258.asia-east1.run.app';
 
         const fmt = (n) => new Intl.NumberFormat('en-US').format(n);
@@ -500,7 +464,7 @@
                     if (isTotal) tr.classList.add('row-daily-total');
                     if (isRebate) tr.classList.add('row-daily-rebate');
                     
-                    // 移除 date-dim 判斷，直接顯示日期
+                    // 直接顯示所有日期
                     let dateHtml = row.date_str;
 
                     let displayGameName = t.game_map[row.game_name] || row.game_name;
