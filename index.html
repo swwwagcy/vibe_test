@@ -19,7 +19,7 @@
             --accent-gold-dim: rgba(250, 204, 21, 0.15);
             --accent-gold-glow: rgba(250, 204, 21, 0.35);
             --accent-green: #34D399;
-            --accent-green-dim: rgba(52, 211, 153, 0.15); /* 新增綠色背景淡化 */
+            --accent-green-dim: rgba(52, 211, 153, 0.15);
             --accent-red: #F43F5E;
             --text-main: #FFFFFF;
             --text-muted: #9CA3AF;
@@ -87,25 +87,103 @@
         }
 
         /* --- Header --- */
-        .promo-header { text-align: center; margin-bottom: 12px; }
-        .promo-title { margin: 0 0 10px 0; font-size: 32px; font-weight: 900; background: linear-gradient(135deg, #FFF 40%, var(--accent-gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; line-height: 1.2; }
-        .promo-subtitle { font-size: 14px; color: var(--text-muted); margin: 0 0 18px 0; line-height: 1.5; }
+        .promo-header { 
+            text-align: center; 
+            margin-bottom: 12px;
+        }
+        
+        .promo-title {
+            margin: 0 0 10px 0; 
+            font-size: 32px; 
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFF 40%, var(--accent-gold) 100%);
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px; 
+            line-height: 1.2;
+        }
+        
+        .promo-subtitle { 
+            font-size: 14px; 
+            color: var(--text-muted); 
+            margin: 0 0 18px 0; 
+            line-height: 1.5;
+        }
+        
         .game-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
-        .game-tag { font-size: 12px; padding: 5px 12px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle); color: var(--text-highlight); display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+        .game-tag {
+            font-size: 12px; 
+            padding: 5px 12px; 
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid var(--border-subtle);
+            color: var(--text-highlight); 
+            display: flex; 
+            align-items: center; 
+            gap: 5px;
+            white-space: nowrap;
+        }
 
         /* --- Section Title --- */
-        .section-title { font-size: 17px; font-weight: 700; color: var(--text-highlight); margin-top: 16px; margin-bottom: 14px; padding-left: 10px; border-left: 4px solid var(--accent-gold); line-height: 1.2; }
+        .section-title {
+            font-size: 17px; 
+            font-weight: 700; 
+            color: var(--text-highlight);
+            margin-top: 16px; 
+            margin-bottom: 14px; 
+            padding-left: 10px; 
+            border-left: 4px solid var(--accent-gold); 
+            line-height: 1.2;
+        }
 
         /* --- Cards Common --- */
-        .card { background: var(--surface-glass); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); }
+        .card {
+            background: var(--surface-glass); 
+            backdrop-filter: blur(24px); 
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border-subtle); 
+            border-radius: var(--radius-lg);
+            overflow: hidden; 
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); 
+        }
 
         /* --- Hero Card --- */
-        .hero-card { padding: 28px 24px; text-align: center; background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 100%); border: 1px solid rgba(250, 204, 21, 0.3); box-shadow: 0 0 50px -10px rgba(250, 204, 21, 0.15); }
-        .hero-label { font-size: 14px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-weight: 600; }
-        .hero-value { font-size: 56px; font-weight: 800; color: var(--accent-gold); text-shadow: 0 0 30px var(--accent-gold-glow); margin: 0; line-height: 1; font-family: 'JetBrains Mono', monospace; letter-spacing: -2px; }
+        .hero-card {
+            padding: 28px 24px; 
+            text-align: center;
+            background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 100%);
+            border: 1px solid rgba(250, 204, 21, 0.3); 
+            box-shadow: 0 0 50px -10px rgba(250, 204, 21, 0.15);
+        }
+        
+        .hero-label { 
+            font-size: 14px; 
+            color: var(--text-muted); 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+            margin-bottom: 10px; 
+            font-weight: 600;
+        }
+        
+        .hero-value { 
+            font-size: 56px; 
+            font-weight: 800; 
+            color: var(--accent-gold); 
+            text-shadow: 0 0 30px var(--accent-gold-glow); 
+            margin: 0; 
+            line-height: 1; 
+            font-family: 'JetBrains Mono', monospace; 
+            letter-spacing: -2px;
+        }
 
         /* --- Bento Grid --- */
-        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .bento-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 14px; 
+            margin-top: 14px; 
+        }
+        
         .stat-card { display: flex; flex-direction: column; justify-content: center; padding: 20px 18px; }
         .stat-label { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
         .stat-value { font-size: 22px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
@@ -124,23 +202,20 @@
         .tier-rate { font-size: 18px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
         .tier-item.active .tier-rate { color: var(--accent-gold); }
 
-/* --- History Table (完美對齊修正版) --- */
+        /* --- History Table (Separate 模式完美版) --- */
         .history-card { 
-            /* 移除這裡的 padding，由表格填滿 */
             padding: 0; 
-            /* 外框設定 */
             border: 1px solid var(--border-subtle); 
             border-radius: var(--radius-lg);
-            /* 關鍵：裁切內部表格的直角背景，讓圓角生效 */
             overflow: hidden; 
+            background: var(--surface-glass);
         }
 
         .history-table { 
             width: 100%; 
-            /* 關鍵：消除間隙，讓線條連貫 */
-            border-collapse: collapse; 
+            /* 使用 separate + border-spacing 0 來解決線條與圓角問題 */
+            border-collapse: separate; 
             border-spacing: 0;
-            /* 關鍵：固定佈局，確保直向線條絕對對齊，不會因文字長短跳動 */
             table-layout: fixed;
             font-size: 14px; 
             text-align: left; 
@@ -153,26 +228,22 @@
             padding: 14px 16px; 
             font-size: 12px; 
             text-transform: uppercase; 
-            /* 標題底線 */
             border-bottom: 1px solid var(--border-subtle); 
-            /* 確保文字不換行，保持整齊 */
             white-space: nowrap;
         }
 
         .history-table td { 
             padding: 16px 16px; 
-            /* 統一底線顏色 */
             border-bottom: 1px solid var(--border-subtle); 
             color: var(--text-main); 
             vertical-align: middle; 
-            /* 防止內容撐開導致對齊跑掉 */
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        /* 移除最後一列的底線，完美貼合卡片底部 */
-        .history-table tr:last-child td { 
+        /* 移除最後一列的底線，避免雙重邊框 */
+        .history-table tbody tr:last-child td { 
             border-bottom: none; 
         }
 
@@ -184,22 +255,19 @@
             font-size: 15px; 
         }
         
-        /* 當日加總 Highlight (金色) - 滿版顯示 */
-        .row-daily-total { background: rgba(250, 204, 21, 0.06) !important; }
+        /* 當日加總 Highlight (金色) */
+        .row-daily-total td { background: rgba(250, 204, 21, 0.06) !important; }
         .row-daily-total .col-game { color: var(--accent-gold); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; }
         .row-daily-total .col-game::before { content: '∑'; font-weight: 400; opacity: 0.7; margin-right: 2px; font-size: 16px; }
         .row-daily-total .col-amount { color: var(--accent-gold); font-weight: 800; font-size: 16px; }
 
-        /* 當日返水 Highlight (綠色) - 滿版顯示 */
-        .row-daily-rebate { background: var(--accent-green-dim) !important; }
+        /* 當日返水 Highlight (綠色) */
+        .row-daily-rebate td { background: var(--accent-green-dim) !important; }
         .row-daily-rebate .col-game { color: var(--accent-green); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; }
         .row-daily-rebate .col-game::before { content: '💎'; font-weight: 400; opacity: 0.8; margin-right: 2px; font-size: 14px; }
         .row-daily-rebate .col-amount { color: var(--accent-green); font-weight: 800; font-size: 16px; }
         
-        /* 日期顯示優化 */
-        .date-dim { opacity: 0.2; font-family: serif; }
-        
-        /* Footer */
+        /* --- Footer --- */
         .footer-rules { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-subtle); color: var(--text-muted); }
         .footer-title { font-size: 14px; font-weight: 700; color: var(--text-dim); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
         .rules-list { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8; color: var(--text-muted); }
@@ -208,7 +276,7 @@
         .rule-highlight { color: var(--accent-gold); font-family: 'JetBrains Mono', monospace; background: var(--accent-gold-dim); padding: 2px 6px; border-radius: 4px; }
         .copyright { margin-top: 50px; text-align: center; font-size: 11px; color: var(--text-dim); opacity: 0.6; }
 
-        /* Utilities */
+        /* --- Utilities --- */
         .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%); background-size: 200% 100%; animation: pulse 1.5s infinite; color: transparent !important; border-radius: 4px; }
         .error-msg { text-align: center; padding: 30px 20px; color: var(--text-muted); background: rgba(255, 50, 50, 0.05); border-radius: var(--radius-md); border: 1px dashed rgba(255, 50, 50, 0.2); margin-top: 30px; font-size: 14px; line-height: 1.6; }
         @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
@@ -277,27 +345,27 @@
             </section>
             <section>
                 <div class="section-title" data-i18n="history_title">📅 近 3 日下注紀錄</div>
-<!-- 在您的 .history-card 內，請將 table 結構改為這樣 -->
-<div class="card history-card">
-    <table class="history-table">
-        <!-- 加入 colgroup 鎖定寬度比例 -->
-        <colgroup>
-            <col style="width: 20%;">
-            <col style="width: 45%;">
-            <col style="width: 35%;">
-        </colgroup>
-        <thead>
-            <tr>
-                <th data-i18n="table_date">日期</th>
-                <th data-i18n="table_game">遊戲</th>
-                <th class="col-amount" data-i18n="table_amount">下注總額</th>
-            </tr>
-        </thead>
-        <tbody id="history-tbody">
-            <!-- JS 渲染內容 -->
-        </tbody>
-    </table>
-</div>
+                <div class="card history-card">
+                    <table class="history-table">
+                        <!-- 固定欄寬比例，確保對齊 -->
+                        <colgroup>
+                            <col style="width: 20%;">
+                            <col style="width: 45%;">
+                            <col style="width: 35%;">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th data-i18n="table_date">日期</th>
+                                <th data-i18n="table_game">遊戲</th>
+                                <th class="col-amount" data-i18n="table_amount">下注總額</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-tbody">
+                            <tr><td><div class="skeleton" style="width:30px; height:12px;"></div></td><td><div class="skeleton" style="width:80px; height:12px;"></div></td><td><div class="skeleton" style="width:50px; height:12px; float:right;"></div></td></tr>
+                            <tr><td><div class="skeleton" style="width:30px; height:12px;"></div></td><td><div class="skeleton" style="width:80px; height:12px;"></div></td><td><div class="skeleton" style="width:50px; height:12px; float:right;"></div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
             <footer class="footer-rules">
                 <div class="footer-title" data-i18n="footer_title">ℹ️ 活動說明</div>
@@ -309,7 +377,7 @@
 
     <script>
         // ★★★ API (Cloud Run) ★★★
-        const API_URL = 'https://game-rebate-api-905468082258.asia-east1.run.app'; // 請確認此處為您的實際 API 網址
+        const API_URL = 'https://game-rebate-api-905468082258.asia-east1.run.app';
 
         const fmt = (n) => new Intl.NumberFormat('en-US').format(n);
         let cachedData = null; 
@@ -448,7 +516,6 @@
             if (!data.history_list || data.history_list.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:20px; color:var(--text-muted);">${t.no_record}</td></tr>`;
             } else {
-                let lastDate = '';
                 data.history_list.forEach(row => {
                     const tr = document.createElement('tr');
                     const isTotal = row.game_name === '當日加總';
@@ -457,7 +524,7 @@
                     if (isTotal) tr.classList.add('row-daily-total');
                     if (isRebate) tr.classList.add('row-daily-rebate');
                     
-                    // 顯示所有日期，不做隱藏
+                    // 直接顯示所有日期，不隱藏
                     let dateHtml = row.date_str;
 
                     let displayGameName = t.game_map[row.game_name] || row.game_name;
