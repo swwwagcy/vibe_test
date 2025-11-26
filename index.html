@@ -188,23 +188,59 @@
            這樣線條就會「消失」在背景中，形成無縫色塊。
         */
 
-        /* 當日加總 (金色) */
+    /* --- 特殊行樣式 (修正版：移除背景，改用螢光文字) --- */
+        
+        /* 當日加總 (金色螢光) */
         .row-daily-total td { 
-            background-color: rgba(250, 204, 21, 0.06) !important; 
-            border-bottom: 1px solid rgba(250, 204, 21, 0.06) !important; /* 邊框同色 */
+            /* 移除背景色，解決線條問題 */
+            background-color: transparent !important; 
+            /* 讓文字變金色 */
+            color: var(--accent-gold) !important; 
+            font-weight: 800;
+            /* 上下邊框稍微亮一點，做區隔 */
+            border-top: 1px solid rgba(250, 204, 21, 0.3) !important;
+            border-bottom: 1px solid rgba(250, 204, 21, 0.3) !important;
         }
-        .row-daily-total .col-game { color: var(--accent-gold); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; }
-        .row-daily-total .col-game::before { content: '∑'; font-weight: 400; opacity: 0.7; margin-right: 2px; font-size: 16px; }
-        .row-daily-total .col-amount { color: var(--accent-gold); font-weight: 800; font-size: 16px; }
+        
+        .row-daily-total .col-game { 
+            display: flex; align-items: center; gap: 6px; font-size: 14px; 
+        }
+        
+        /* 為了讓它更像重點，可以加一點點文字發光效果 (可選) */
+        .row-daily-total .col-amount,
+        .row-daily-total .col-game {
+            text-shadow: 0 0 10px rgba(250, 204, 21, 0.2);
+        }
 
-        /* 當日返水 (綠色) */
-        .row-daily-rebate td { 
-            background-color: rgba(52, 211, 153, 0.15) !important; 
-            border-bottom: 1px solid rgba(52, 211, 153, 0.15) !important; /* 邊框同色 */
+        .row-daily-total .col-game::before { 
+            content: '∑'; font-weight: 400; opacity: 0.8; margin-right: 2px; font-size: 16px; 
         }
-        .row-daily-rebate .col-game { color: var(--accent-green); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; }
-        .row-daily-rebate .col-game::before { content: '💎'; font-weight: 400; opacity: 0.8; margin-right: 2px; font-size: 14px; }
-        .row-daily-rebate .col-amount { color: var(--accent-green); font-weight: 800; font-size: 16px; }
+
+
+        /* 當日返水 (綠色螢光) */
+        .row-daily-rebate td { 
+            /* 移除背景色 */
+            background-color: transparent !important; 
+            /* 讓文字變綠色 */
+            color: var(--accent-green) !important; 
+            font-weight: 800;
+            /* 邊框配色 */
+            border-top: 1px solid rgba(52, 211, 153, 0.3) !important;
+            border-bottom: 1px solid rgba(52, 211, 153, 0.3) !important;
+        }
+        
+        .row-daily-rebate .col-game { 
+            display: flex; align-items: center; gap: 6px; font-size: 14px; 
+        }
+
+        .row-daily-rebate .col-amount,
+        .row-daily-rebate .col-game {
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.2);
+        }
+
+        .row-daily-rebate .col-game::before { 
+            content: '💎'; font-weight: 400; opacity: 1; margin-right: 2px; font-size: 14px; 
+        }
         
         /* Footer */
         .footer-rules { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-subtle); color: var(--text-muted); }
