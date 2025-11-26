@@ -124,18 +124,28 @@
         .tier-rate { font-size: 18px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
         .tier-item.active .tier-rate { color: var(--accent-gold); }
 
-        /* --- History Table (優化線條與排版) --- */
+/* --- History Table (完美對齊修正版) --- */
         .history-card { 
+            /* 移除這裡的 padding，由表格填滿 */
             padding: 0; 
+            /* 外框設定 */
             border: 1px solid var(--border-subtle); 
+            border-radius: var(--radius-lg);
+            /* 關鍵：裁切內部表格的直角背景，讓圓角生效 */
+            overflow: hidden; 
         }
+
         .history-table { 
             width: 100%; 
-            /* 確保邊框合併，這是解決線條斷裂的關鍵 */
+            /* 關鍵：消除間隙，讓線條連貫 */
             border-collapse: collapse; 
+            border-spacing: 0;
+            /* 關鍵：固定佈局，確保直向線條絕對對齊，不會因文字長短跳動 */
+            table-layout: fixed;
             font-size: 14px; 
             text-align: left; 
         }
+
         .history-table th { 
             background: rgba(255, 255, 255, 0.03); 
             color: var(--text-muted); 
@@ -143,20 +153,29 @@
             padding: 14px 16px; 
             font-size: 12px; 
             text-transform: uppercase; 
-            /* 線條設定 */
+            /* 標題底線 */
             border-bottom: 1px solid var(--border-subtle); 
+            /* 確保文字不換行，保持整齊 */
+            white-space: nowrap;
         }
+
         .history-table td { 
             padding: 16px 16px; 
-            /* 線條設定：確保每格都有底部邊框，除了最後一行 */
+            /* 統一底線顏色 */
             border-bottom: 1px solid var(--border-subtle); 
             color: var(--text-main); 
             vertical-align: middle; 
+            /* 防止內容撐開導致對齊跑掉 */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        /* 移除最後一列的底線，避免與卡片邊框重疊 */
+
+        /* 移除最後一列的底線，完美貼合卡片底部 */
         .history-table tr:last-child td { 
             border-bottom: none; 
         }
+
         .col-amount { 
             text-align: right; 
             font-family: 'JetBrains Mono', monospace; 
@@ -165,17 +184,20 @@
             font-size: 15px; 
         }
         
-        /* 當日加總 Highlight (金色) */
+        /* 當日加總 Highlight (金色) - 滿版顯示 */
         .row-daily-total { background: rgba(250, 204, 21, 0.06) !important; }
         .row-daily-total .col-game { color: var(--accent-gold); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; }
         .row-daily-total .col-game::before { content: '∑'; font-weight: 400; opacity: 0.7; margin-right: 2px; font-size: 16px; }
         .row-daily-total .col-amount { color: var(--accent-gold); font-weight: 800; font-size: 16px; }
 
-        /* ★★★ 新增：當日返水 Highlight (綠色) ★★★ */
+        /* 當日返水 Highlight (綠色) - 滿版顯示 */
         .row-daily-rebate { background: var(--accent-green-dim) !important; }
         .row-daily-rebate .col-game { color: var(--accent-green); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; }
         .row-daily-rebate .col-game::before { content: '💎'; font-weight: 400; opacity: 0.8; margin-right: 2px; font-size: 14px; }
         .row-daily-rebate .col-amount { color: var(--accent-green); font-weight: 800; font-size: 16px; }
+        
+        /* 日期顯示優化 */
+        .date-dim { opacity: 0.2; font-family: serif; }
         
         /* Footer */
         .footer-rules { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-subtle); color: var(--text-muted); }
@@ -255,21 +277,27 @@
             </section>
             <section>
                 <div class="section-title" data-i18n="history_title">📅 近 3 日下注紀錄</div>
-                <div class="card history-card">
-                    <table class="history-table">
-                        <thead>
-                            <tr>
-                                <th width="20%" data-i18n="table_date">日期</th>
-                                <th width="45%" data-i18n="table_game">遊戲</th>
-                                <th width="35%" class="col-amount" data-i18n="table_amount">下注總額</th>
-                            </tr>
-                        </thead>
-                        <tbody id="history-tbody">
-                            <tr><td><div class="skeleton" style="width:30px; height:12px;"></div></td><td><div class="skeleton" style="width:80px; height:12px;"></div></td><td><div class="skeleton" style="width:50px; height:12px; float:right;"></div></td></tr>
-                            <tr><td><div class="skeleton" style="width:30px; height:12px;"></div></td><td><div class="skeleton" style="width:80px; height:12px;"></div></td><td><div class="skeleton" style="width:50px; height:12px; float:right;"></div></td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<!-- 在您的 .history-card 內，請將 table 結構改為這樣 -->
+<div class="card history-card">
+    <table class="history-table">
+        <!-- 加入 colgroup 鎖定寬度比例 -->
+        <colgroup>
+            <col style="width: 20%;">
+            <col style="width: 45%;">
+            <col style="width: 35%;">
+        </colgroup>
+        <thead>
+            <tr>
+                <th data-i18n="table_date">日期</th>
+                <th data-i18n="table_game">遊戲</th>
+                <th class="col-amount" data-i18n="table_amount">下注總額</th>
+            </tr>
+        </thead>
+        <tbody id="history-tbody">
+            <!-- JS 渲染內容 -->
+        </tbody>
+    </table>
+</div>
             </section>
             <footer class="footer-rules">
                 <div class="footer-title" data-i18n="footer_title">ℹ️ 活動說明</div>
