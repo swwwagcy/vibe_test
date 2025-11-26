@@ -200,4 +200,309 @@
         /* 當日返水 (綠色) */
         .row-daily-rebate td { 
             background-color: rgba(52, 211, 153, 0.15) !important; 
-            border-bottom: 1px solid rgba(52, 211, 153, 0.15)
+            border-bottom: 1px solid rgba(52, 211, 153, 0.15) !important; /* 邊框同色 */
+        }
+        .row-daily-rebate .col-game { color: var(--accent-green); font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 14px; }
+        .row-daily-rebate .col-game::before { content: '💎'; font-weight: 400; opacity: 0.8; margin-right: 2px; font-size: 14px; }
+        .row-daily-rebate .col-amount { color: var(--accent-green); font-weight: 800; font-size: 16px; }
+        
+        /* Footer */
+        .footer-rules { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-subtle); color: var(--text-muted); }
+        .footer-title { font-size: 14px; font-weight: 700; color: var(--text-dim); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+        .rules-list { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8; color: var(--text-muted); }
+        .rules-list li { position: relative; padding-left: 16px; margin-bottom: 10px; }
+        .rules-list li::before { content: "•"; position: absolute; left: 0; color: var(--text-dim); font-size: 16px; line-height: 1.2; }
+        .rule-highlight { color: var(--accent-gold); font-family: 'JetBrains Mono', monospace; background: var(--accent-gold-dim); padding: 2px 6px; border-radius: 4px; }
+        .copyright { margin-top: 50px; text-align: center; font-size: 11px; color: var(--text-dim); opacity: 0.6; }
+
+        /* Utilities */
+        .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%); background-size: 200% 100%; animation: pulse 1.5s infinite; color: transparent !important; border-radius: 4px; }
+        .error-msg { text-align: center; padding: 30px 20px; color: var(--text-muted); background: rgba(255, 50, 50, 0.05); border-radius: var(--radius-md); border: 1px dashed rgba(255, 50, 50, 0.2); margin-top: 30px; font-size: 14px; line-height: 1.6; }
+        @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <div class="lang-switch-container">
+            <button class="lang-btn active" onclick="changeLang('zh-TW')">繁</button>
+            <button class="lang-btn" onclick="changeLang('zh-CN')">简</button>
+            <button class="lang-btn" onclick="changeLang('en')">EN</button>
+            <button class="lang-btn" onclick="changeLang('jp')">JP</button>
+        </div>
+        <div id="app-content">
+            <header class="promo-header">
+                <h1 class="promo-title" data-i18n="title">直播間遊戲<br>天天返鑽石 💎</h1>
+                <p class="promo-subtitle" data-i18n="subtitle">玩直播間任一款遊戲，天天返鑽石！</p>
+                <div class="game-tags">
+                    <span class="game-tag" data-i18n="game_1">🐉 龍乳鬥白虎</span>
+                    <span class="game-tag" data-i18n="game_2">💈 一柱擎天</span>
+                    <span class="game-tag" data-i18n="game_3">🌪️ 金射狂風</span>
+                </div>
+            </header>
+            <main>
+                <div class="card hero-card">
+                    <div class="hero-label" data-i18n="hero_label">✨ 預計明日返水 (鑽)</div>
+                    <div class="hero-value skeleton" id="val-rebate">00,000</div>
+                    <div class="progress-section">
+                        <div class="progress-header">
+                            <span id="tier-status">Loading...</span>
+                            <span id="next-diff">---</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bento-grid">
+                    <div class="card stat-card">
+                        <div class="stat-label" data-i18n="daily_bet_label">今日下注總點數</div>
+                        <div class="stat-value skeleton" id="val-total">0</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-label" data-i18n="status_label">當前活動資格</div>
+                        <div class="stat-value" id="val-qualify" style="font-size: 13px;">---</div>
+                    </div>
+                </div>
+            </main>
+            <section>
+                <div class="section-title" data-i18n="rate_title">📊 鑽石回饋比例</div>
+                <div class="tier-list">
+                    <div class="tier-item" id="tier-3">
+                        <div class="tier-range" data-i18n="tier_3_range">1,000 萬以上</div>
+                        <div class="tier-rate">1.8%</div>
+                    </div>
+                    <div class="tier-item" id="tier-2">
+                        <div class="tier-range" data-i18n="tier_2_range">100 萬 ~ 999 萬</div>
+                        <div class="tier-rate">1.4%</div>
+                    </div>
+                    <div class="tier-item" id="tier-1">
+                        <div class="tier-range" data-i18n="tier_1_range">5,000 ~ 99 萬</div>
+                        <div class="tier-rate">0.7%</div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="section-title" data-i18n="history_title">📅 近 3 日下注紀錄</div>
+                <div class="card history-card">
+                    <table class="history-table">
+                        <!-- 固定欄寬比例，確保對齊 -->
+                        <colgroup>
+                            <col style="width: 20%;">
+                            <col style="width: 45%;">
+                            <col style="width: 35%;">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th data-i18n="table_date">日期</th>
+                                <th data-i18n="table_game">遊戲</th>
+                                <th class="col-amount" data-i18n="table_amount">下注總額</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-tbody">
+                            <!-- 骨架屏 -->
+                            <tr><td><div class="skeleton" style="width:30px; height:12px;"></div></td><td><div class="skeleton" style="width:80px; height:12px;"></div></td><td><div class="skeleton" style="width:50px; height:12px; float:right;"></div></td></tr>
+                            <tr><td><div class="skeleton" style="width:30px; height:12px;"></div></td><td><div class="skeleton" style="width:80px; height:12px;"></div></td><td><div class="skeleton" style="width:50px; height:12px; float:right;"></div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <footer class="footer-rules">
+                <div class="footer-title" data-i18n="footer_title">ℹ️ 活動說明</div>
+                <ul class="rules-list" id="footer-rules-list"></ul>
+                <div class="copyright">© 2025 SWAG. All Rights Reserved.</div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // ★★★ API (Cloud Run) ★★★
+        const API_URL = 'https://game-rebate-api-905468082258.asia-east1.run.app';
+
+        const fmt = (n) => new Intl.NumberFormat('en-US').format(n);
+        let cachedData = null; 
+        let currentLang = 'zh-TW';
+        let currentError = null; 
+
+        const TRANSLATIONS = {
+            'zh-TW': {
+                title: '直播間遊戲<br>天天返鑽石 💎', subtitle: '玩直播間任一款遊戲，天天返鑽石！',
+                game_1: '🐉 龍乳鬥白虎', game_2: '💈 一柱擎天', game_3: '🌪️ 金射狂風',
+                hero_label: '✨ 預計明日返水 (鑽)', daily_bet_label: '今日下注總點數', status_label: '當前活動資格',
+                rate_title: '📊 鑽石回饋比例', tier_3_range: '1,000 萬以上', tier_2_range: '100 萬 ~ 999 萬', tier_1_range: '5,000 ~ 99 萬',
+                history_title: '📅 近 3 日下注紀錄', table_date: '日期', table_game: '遊戲', table_amount: '下注總額',
+                footer_title: 'ℹ️ 活動說明', qualify_yes: '✅ 符合資格', qualify_no: '⏳ 尚未達標',
+                tier_current: '當前層級', tier_max: '已達最高層級 🚀', tier_diff: '差 {n} 升級', loading: '載入中...', no_record: '尚無紀錄',
+                err_missing_title: '⚠️ 缺少用戶資訊', err_missing_desc: '無法讀取 User ID，請確認連結格式。',
+                err_conn_title: '連線錯誤', err_conn_desc: '無法連接至伺服器，請稍後再試。', err_data_title: '數據讀取失敗',
+                game_map: { '龍乳鬥白虎': '龍乳鬥白虎', '一柱擎天': '一柱擎天', '金射狂風': '金射狂風', '當日加總': '當日加總', '當日返水': '當日返水' },
+                rules: ['活動期間，每日下注總額滿 <strong>5,000</strong> 鑽石即享鑽石返還。', '活動期間日日返鑽，隔日 01:00 前發放至所屬帳號內。', '舉例：<span class="rule-highlight">11/29 01:00</span> 前發放 11/28 全天的返鑽，時區為 UTC+8。', '僅計直播間三款遊戲：「龍乳鬥白虎」、「一柱擎天」、「金射狂風」 的有效投注加總鑽石數。', '返鑽數量四捨五入小數點後一位。舉例：前日下注 52,400 鑽次日返水為 52,400 * 0.7% = 366.8，實際將發放 <span class="rule-highlight">367</span> 鑽。', '投注模式異常者，系統有權取消返鑽資格。', '資料需登入帳號以正確顯示。']
+            },
+            'zh-CN': {
+                title: '直播间游戏<br>天天返钻石 💎', subtitle: '玩直播间任一款游戏，天天返钻石！',
+                game_1: '🐉 龙乳斗白虎', game_2: '💈 一柱擎天', game_3: '🌪️ 金射狂风',
+                hero_label: '✨ 预计明日返水 (钻)', daily_bet_label: '今日下注总点数', status_label: '当前活动资格',
+                rate_title: '📊 钻石回馈比例', tier_3_range: '1,000 万以上', tier_2_range: '100 万 ~ 999 万', tier_1_range: '5,000 ~ 99 万',
+                history_title: '📅 近 3 日下注纪录', table_date: '日期', table_game: '游戏', table_amount: '下注总额',
+                footer_title: 'ℹ️ 活动说明', qualify_yes: '✅ 符合资格', qualify_no: '⏳ 尚未达标',
+                tier_current: '当前层级', tier_max: '已达最高层级 🚀', tier_diff: '差 {n} 升级', loading: '加载中...', no_record: '尚无纪录',
+                err_missing_title: '⚠️ 缺少用户信息', err_missing_desc: '无法读取 User ID，请确认连结格式。',
+                err_conn_title: '连接错误', err_conn_desc: '无法连接至服务器，请稍后再试。', err_data_title: '数据读取失败',
+                game_map: { '龍乳鬥白虎': '龙乳斗白虎', '一柱擎天': '一柱擎天', '金射狂風': '金射狂风', '當日加總': '当日加总', '當日返水': '当日返水' },
+                rules: ['活动期间，每日下注总额满 <strong>5,000</strong> 钻石即享钻石返还。', '活动期间日日返钻，隔日 01:00 前发放至所属帐号内。', '举例：<span class="rule-highlight">11/29 01:00</span> 前发放 11/28 全天的返钻，时区为 UTC+8。', '仅计直播间三款游戏：「龙乳斗白虎」、「一柱擎天」、「金射狂风」 的有效投注加总钻石数。', '返钻数量四舍五入小数点后一位。举例：前日下注 52,400 钻次日返水为 52,400 * 0.7% = 366.8，实际将发放 <span class="rule-highlight">367</span> 钻。', '投注模式异常者，系统有权取消返钻资格。', '资料需登入帐号以正确显示。']
+            },
+            'en': {
+                title: 'Live Games<br>Daily Diamond Rebate 💎', subtitle: 'Play any live game and get rebates daily!',
+                game_1: '🐉 Dragon Tiger', game_2: '💈 Golden Gate', game_3: '🌪️ Soaring High',
+                hero_label: '✨ Est. Rebate (Diamonds)', daily_bet_label: 'Total Bet Today', status_label: 'Eligibility',
+                rate_title: '📊 Rebate Rates', tier_3_range: '10M+', tier_2_range: '1M ~ 9.99M', tier_1_range: '5K ~ 990K',
+                history_title: '📅 Last 3 Days Records', table_date: 'Date', table_game: 'Game', table_amount: 'Total Bet',
+                footer_title: 'ℹ️ Rules', qualify_yes: '✅ Qualified', qualify_no: '⏳ Not Qualified',
+                tier_current: 'Current Tier', tier_max: 'Max Tier Reached 🚀', tier_diff: '{n} to Next Tier', loading: 'Loading...', no_record: 'No records found',
+                err_missing_title: '⚠️ Missing User ID', err_missing_desc: 'Cannot find user_id. Please check the URL.',
+                err_conn_title: 'Connection Error', err_conn_desc: 'Unable to connect to server. Please try again later.', err_data_title: 'Data Error',
+                game_map: { '龍乳鬥白虎': 'Dragon Tiger', '一柱擎天': 'Golden Gate', '金射狂風': 'Soaring High', '當日加總': 'Daily Total', '當日返水': 'Daily Rebate' },
+                rules: ['Daily total bet of <strong>5,000</strong> diamonds required to qualify for rebate.', 'Rebates are issued daily before 01:00 (UTC+8) the following day.', 'Example: Rebates for 11/28 will be issued before <span class="rule-highlight">11/29 01:00</span>.', 'Only valid bets on "Dragon Tiger", "Golden Gate", and "Soaring High" count.', 'Rebates are rounded to 1 decimal place. E.g., 52,400 bet * 0.7% = 366.8 -> <span class="rule-highlight">367</span> diamonds issued.', 'Abnormal betting patterns may result in disqualification.', 'Login required to view data.']
+            },
+            'jp': {
+                title: 'ライブゲーム<br>毎日ダイヤ還元 💎', subtitle: '対象ゲームを遊んで、毎日還元ゲット！',
+                game_1: '🐉 ドラゴンタイガー', game_2: '💈 ゴールデンゲート', game_3: '🌪️ ソアリングハイ',
+                hero_label: '✨ 明日の予想還元 (ダイヤ)', daily_bet_label: '本日の総ベット', status_label: '現在のステータス',
+                rate_title: '📊 還元率テーブル', tier_3_range: '1,000 万以上', tier_2_range: '100 万 ~ 999 万', tier_1_range: '5,000 ~ 99 万',
+                history_title: '📅 過去 3 日間の履歴', table_date: '日付', table_game: 'ゲーム', table_amount: '総ベット',
+                footer_title: 'ℹ️ イベント詳細', qualify_yes: '✅ 対象', qualify_no: '⏳ 未達',
+                tier_current: '現在のランク', tier_max: '最大ランク到達 🚀', tier_diff: 'ランクアップまで {n}', loading: '読み込み中...', no_record: '履歴なし',
+                err_missing_title: '⚠️ ユーザー情報不足', err_missing_desc: 'User IDが見つかりません。リンクを確認してください。',
+                err_conn_title: '通信エラー', err_conn_desc: 'サーバーに接続できません。後ほどお試しください。', err_data_title: 'データエラー',
+                game_map: { '龍乳鬥白虎': 'ドラゴンタイガー', '一柱擎天': 'ゴールデンゲート', '金射狂風': 'ソアリングハイ', '當日加總': '当日合計', '當日返水': '当日還元' },
+                rules: ['毎日総ベット額 <strong>5,000</strong> ダイヤ以上で還元対象となります。', '還元は翌日の 01:00 (UTC+8) までにアカウントに配布されます。', '例：11/28 分の還元は <span class="rule-highlight">11/29 01:00</span> までに配布。', '「ドラゴンタイガー」「ゴールデンゲート」「ソアリングハイ」の有効ベットのみが対象です。', '還元額は小数点第一位を四捨五入します。例：52,400 * 0.7% = 366.8 → <span class="rule-highlight">367</span> ダイヤ配布。', '不正なベットパターンが確認された場合、資格が取り消されることがあります。', 'データを表示するにはログインが必要です。']
+            }
+        };
+
+        function detectAndSetLanguage() {
+            const browserLang = navigator.language || navigator.userLanguage || 'zh-TW';
+            const lowerLang = browserLang.toLowerCase();
+            let defaultLang = 'zh-TW';
+            if (lowerLang.includes('zh')) defaultLang = (lowerLang.includes('cn') || lowerLang.includes('sg')) ? 'zh-CN' : 'zh-TW';
+            else if (lowerLang.startsWith('en')) defaultLang = 'en';
+            else if (lowerLang.startsWith('ja')) defaultLang = 'jp';
+            changeLang(defaultLang);
+        }
+
+        function showError(type, debugInfo = '') {
+            currentError = { type, debugInfo };
+            const t = TRANSLATIONS[currentLang];
+            let title = t.err_data_title, desc = debugInfo;
+            if (type === 'missing') { title = t.err_missing_title; desc = t.err_missing_desc; }
+            else if (type === 'connection') { title = t.err_conn_title; desc = t.err_conn_desc; }
+            document.getElementById('app-content').innerHTML = `<div class="error-msg"><h3>${title}</h3><p>${desc}</p>${debugInfo && type !== 'missing' ? `<p style="font-size:10px; color:#aaa; margin-top:10px;">${debugInfo}</p>` : ''}</div>`;
+        }
+
+        function changeLang(lang) {
+            currentLang = lang;
+            const t = TRANSLATIONS[lang];
+            const btns = document.querySelectorAll('.lang-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            if(lang === 'zh-TW') btns[0].classList.add('active');
+            else if(lang === 'zh-CN') btns[1].classList.add('active');
+            else if(lang === 'en') btns[2].classList.add('active');
+            else if(lang === 'jp') btns[3].classList.add('active');
+
+            if (currentError) { showError(currentError.type, currentError.debugInfo); return; }
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.innerHTML = t[key];
+            });
+
+            const rulesList = document.getElementById('footer-rules-list');
+            if (rulesList) {
+                rulesList.innerHTML = '';
+                t.rules.forEach(rule => {
+                    const li = document.createElement('li');
+                    li.innerHTML = rule;
+                    rulesList.appendChild(li);
+                });
+            }
+            const statusEl = document.getElementById('tier-status');
+            if (statusEl && statusEl.innerText.includes('...')) statusEl.innerText = t.loading;
+            if (cachedData) renderDashboard(cachedData);
+        }
+
+        function renderDashboard(data) {
+            cachedData = data;
+            const t = TRANSLATIONS[currentLang];
+            document.querySelectorAll('.skeleton').forEach(el => el.classList.remove('skeleton'));
+            document.getElementById('val-rebate').innerText = fmt(data.est_rebate);
+            document.getElementById('val-total').innerText = fmt(data.total_bet);
+            
+            const qEl = document.getElementById('val-qualify');
+            qEl.innerText = data.total_bet >= 5000 ? t.qualify_yes : t.qualify_no;
+            qEl.style.color = data.total_bet >= 5000 ? "var(--accent-green)" : "var(--text-muted)";
+
+            document.getElementById('progress-bar').style.width = `${data.progress_percent}%`;
+            let diffText = data.next_tier_diff <= 0 ? t.tier_max : t.tier_diff.replace('{n}', fmt(data.next_tier_diff));
+            document.getElementById('tier-status').innerText = `${t.tier_current} ${data.current_rate}%`;
+            document.getElementById('next-diff').innerText = diffText;
+            document.getElementById('next-diff').style.color = data.next_tier_diff <= 0 ? "var(--accent-gold)" : "var(--text-muted)";
+
+            document.querySelectorAll('.tier-item').forEach(el => el.classList.remove('active'));
+            if (data.total_bet >= 10000000) document.getElementById('tier-3').classList.add('active');
+            else if (data.total_bet >= 1000000) document.getElementById('tier-2').classList.add('active');
+            else if (data.total_bet >= 5000) document.getElementById('tier-1').classList.add('active');
+
+            const tbody = document.getElementById('history-tbody');
+            tbody.innerHTML = '';
+            if (!data.history_list || data.history_list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:20px; color:var(--text-muted);">${t.no_record}</td></tr>`;
+            } else {
+                data.history_list.forEach(row => {
+                    const tr = document.createElement('tr');
+                    const isTotal = row.game_name === '當日加總';
+                    const isRebate = row.game_name === '當日返水';
+                    
+                    if (isTotal) tr.classList.add('row-daily-total');
+                    if (isRebate) tr.classList.add('row-daily-rebate');
+                    
+                    // 移除 date-dim 判斷，直接顯示日期
+                    let dateHtml = row.date_str;
+
+                    let displayGameName = t.game_map[row.game_name] || row.game_name;
+                    tr.innerHTML = `<td style="color: var(--text-muted);">${dateHtml}</td><td class="col-game">${displayGameName}</td><td class="col-amount">${fmt(row.amount)}</td>`;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        async function init() {
+            detectAndSetLanguage();
+            try {
+                let userId = null;
+                const currentUrl = window.location.href;
+                const regex = /(?:[?&#/]|^)user_id=([^&#]*)/i;
+                const match = currentUrl.match(regex);
+                if (match && match[1]) userId = match[1];
+                if (!userId) {
+                    try {
+                        const decoded = decodeURIComponent(currentUrl);
+                        const m2 = decoded.match(regex);
+                        if (m2 && m2[1]) userId = m2[1];
+                    } catch(e){}
+                }
+                if (!userId) { showError('missing'); return; }
+
+                const response = await fetch(`${API_URL}?user_id=${encodeURIComponent(userId)}`, {
+                    method: 'GET', redirect: 'follow', mode: 'cors', credentials: 'omit'
+                });
+                const json = await response.json();
+                if (json.status === 'success') renderDashboard(json.data);
+                else showError('data', json.message);
+            } catch (e) {
+                console.error(e);
+                showError('connection', e.toString());
+            }
+        }
+        init();
+    </script>
+</body>
+</html>
