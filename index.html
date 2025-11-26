@@ -251,9 +251,16 @@
         .tier-rate { font-size: 18px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
         .tier-item.active .tier-rate { color: var(--accent-gold); }
 
-        /* --- History Table --- */
+        /* --- History Table (修正後) --- */
         .history-card { padding: 0; border: 1px solid var(--border-subtle); }
-        .history-table { width: 100%; border-collapse: collapse; border-spacing: 0; font-size: 14px; text-align: left; }
+        .history-table { 
+            width: 100%; 
+            /* ★★★ 修正重點：使用 separate 解決邊框重疊/歪斜 ★★★ */
+            border-collapse: separate; 
+            border-spacing: 0; 
+            font-size: 14px; 
+            text-align: left; 
+        }
         .history-table th { 
             background: rgba(255, 255, 255, 0.03); 
             color: var(--text-muted); 
@@ -261,11 +268,11 @@
             padding: 14px 16px; 
             font-size: 12px; 
             text-transform: uppercase; 
-            border-bottom: 1px solid var(--border-subtle); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 統一邊框顏色 */
         }
         .history-table td { 
             padding: 16px 16px; 
-            border-bottom: 1px solid var(--border-subtle); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 統一邊框顏色 */
             color: var(--text-main); 
             vertical-align: middle; 
         }
@@ -278,7 +285,8 @@
             font-size: 15px; 
         }
         
-        .row-daily-total { background: rgba(250, 204, 21, 0.06) !important; }
+        /* ★★★ 修正重點：當日加總背景色應用在 TD 而非 TR ★★★ */
+        .row-daily-total td { background: rgba(250, 204, 21, 0.06); }
         .row-daily-total .col-game { 
             color: var(--accent-gold); 
             font-weight: 800; 
