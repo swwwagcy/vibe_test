@@ -43,7 +43,8 @@
                 radial-gradient(circle at 90% 90%, rgba(250, 204, 21, 0.08) 0%, transparent 50%);
             background-attachment: fixed;
             min-height: 100vh;
-            font-size: 14px;
+            /* 修改：基礎字體從 14px 提升至 16px */
+            font-size: 16px;
         }
 
         .dashboard-container {
@@ -68,9 +69,9 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: var(--text-muted);
-            padding: 4px 10px;
+            padding: 5px 12px; /* 微調按鈕內距 */
             border-radius: 14px;
-            font-size: 11px;
+            font-size: 12px; /* 微調：11px -> 12px */
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -88,43 +89,54 @@
 
         /* --- Header --- */
         .promo-header { text-align: center; margin-bottom: 12px; }
-        .promo-title { margin: 0 0 10px 0; font-size: 32px; font-weight: 900; background: linear-gradient(135deg, #FFF 40%, var(--accent-gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; line-height: 1.2; }
-        .promo-subtitle { font-size: 14px; color: var(--text-muted); margin: 0 0 18px 0; line-height: 1.5; }
+        /* 修改：標題加大 32px -> 36px */
+        .promo-title { margin: 0 0 10px 0; font-size: 36px; font-weight: 900; background: linear-gradient(135deg, #FFF 40%, var(--accent-gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; line-height: 1.2; }
+        /* 修改：副標題加大 14px -> 15px */
+        .promo-subtitle { font-size: 15px; color: var(--text-muted); margin: 0 0 18px 0; line-height: 1.5; }
         .game-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
-        .game-tag { font-size: 12px; padding: 5px 12px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle); color: var(--text-highlight); display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+        /* 修改：Tag 字體加大 12px -> 13px */
+        .game-tag { font-size: 13px; padding: 6px 14px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle); color: var(--text-highlight); display: flex; align-items: center; gap: 5px; white-space: nowrap; }
 
         /* --- Section Title --- */
-        .section-title { font-size: 17px; font-weight: 700; color: var(--text-highlight); margin-top: 16px; margin-bottom: 14px; padding-left: 10px; border-left: 4px solid var(--accent-gold); line-height: 1.2; }
+        /* 修改：區塊標題加大 17px -> 19px */
+        .section-title { font-size: 19px; font-weight: 700; color: var(--text-highlight); margin-top: 18px; margin-bottom: 16px; padding-left: 12px; border-left: 4px solid var(--accent-gold); line-height: 1.2; }
 
         /* --- Cards Common --- */
         .card { background: var(--surface-glass); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); }
 
         /* --- Hero Card --- */
         .hero-card { padding: 28px 24px; text-align: center; background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 100%); border: 1px solid rgba(250, 204, 21, 0.3); box-shadow: 0 0 50px -10px rgba(250, 204, 21, 0.15); }
-        .hero-label { font-size: 14px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-weight: 600; }
+        /* 修改：Hero Label 加大 14px -> 15px */
+        .hero-label { font-size: 15px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; font-weight: 600; }
+        /* 修改：數值保持大字體，無需變動，視覺已足夠 */
         .hero-value { font-size: 56px; font-weight: 800; color: var(--accent-green); text-shadow: 0 0 30px var(--accent-green-glow); margin: 0; line-height: 1; font-family: 'JetBrains Mono', monospace; letter-spacing: -2px; }
 
         /* --- Bento Grid --- */
         .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
-        .stat-card { display: flex; flex-direction: column; justify-content: center; padding: 20px 18px; }
-        .stat-label { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
-        .stat-value { font-size: 22px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+        .stat-card { display: flex; flex-direction: column; justify-content: center; padding: 22px 20px; }
+        /* 修改：Stat Label 加大 13px -> 14px */
+        .stat-label { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
+        /* 修改：Stat Value 加大 22px -> 26px */
+        .stat-value { font-size: 26px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
 
         /* --- Progress Bar --- */
         .progress-section { margin-top: 28px; text-align: left; }
-        .progress-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; color: var(--text-muted); font-weight: 600; }
+        /* 修改：進度條文字 13px -> 14px */
+        .progress-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; color: var(--text-muted); font-weight: 600; }
         .progress-track { height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-gold), #FFF); width: 0%; border-radius: 10px; transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 0 15px var(--accent-gold-glow); }
 
         /* --- Tier List --- */
         .tier-list { display: flex; flex-direction: column; gap: 10px; }
-        .tier-item { display: flex; justify-content: space-between; align-items: center; background: var(--surface-solid); padding: 16px 18px; border-radius: var(--radius-sm); border: 1px solid transparent; transition: all 0.3s; }
+        .tier-item { display: flex; justify-content: space-between; align-items: center; background: var(--surface-solid); padding: 18px 20px; border-radius: var(--radius-sm); border: 1px solid transparent; transition: all 0.3s; }
         .tier-item.active { background: var(--accent-gold-dim); border-color: rgba(250, 204, 21, 0.4); transform: scale(1.01); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .tier-range { font-size: 14px; color: var(--text-muted); font-weight: 500; }
-        .tier-rate { font-size: 18px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
+        /* 修改：區間文字 14px -> 15px */
+        .tier-range { font-size: 15px; color: var(--text-muted); font-weight: 500; }
+        /* 修改：比例文字 18px -> 20px */
+        .tier-rate { font-size: 20px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
         .tier-item.active .tier-rate { color: var(--accent-gold); }
 
-        /* --- History Table (已修復線條問題) --- */
+        /* --- History Table --- */
         .history-card { 
             padding: 0; 
             border: 1px solid var(--border-subtle); 
@@ -135,11 +147,11 @@
 
         .history-table { 
             width: 100%; 
-            /* 修正：使用 separate + spacing 0 來確保線條完美對齊且不模糊 */
             border-collapse: separate; 
             border-spacing: 0;
             table-layout: fixed;
-            font-size: 14px; 
+            /* 修改：表格內文稍微加大 14px -> 15px */
+            font-size: 15px; 
             text-align: left; 
         }
 
@@ -148,16 +160,15 @@
             color: var(--text-muted); 
             font-weight: 600; 
             padding: 14px 16px; 
-            font-size: 12px; 
+            /* 修改：表頭文字 12px -> 13px */
+            font-size: 13px; 
             text-transform: uppercase; 
-            /* 修正：確保邊框顏色統一 */
             border-bottom: 1px solid var(--border-subtle); 
             white-space: nowrap;
         }
 
         .history-table td { 
             padding: 16px 16px; 
-            /* 修正：確保邊框顏色統一 */
             border-bottom: 1px solid var(--border-subtle); 
             color: var(--text-main); 
             vertical-align: middle; 
@@ -166,7 +177,6 @@
             text-overflow: ellipsis;
         }
 
-        /* 移除最後一列的底線，避免與卡片邊框重疊變粗 */
         .history-table tr:last-child td { 
             border-bottom: none; 
         }
@@ -176,43 +186,49 @@
             font-family: 'JetBrains Mono', monospace; 
             font-weight: 600; 
             letter-spacing: -0.5px; 
-            font-size: 15px; 
+            /* 修改：金額數字 15px -> 16px */
+            font-size: 16px; 
         }
         
-        /* 當日加總 (金色文字) */
+        /* 當日加總 */
         .row-daily-total td { 
             background-color: transparent !important;
             color: var(--accent-gold) !important; 
             font-weight: 800;
         }
-        .row-daily-total .col-game { display: table-cell; vertical-align: middle; gap: 6px; font-size: 14px; }
+        /* 修改：遊戲名稱欄位 14px -> 15px */
+        .row-daily-total .col-game { display: table-cell; vertical-align: middle; gap: 6px; font-size: 15px; }
         .row-daily-total .col-game::before { content: '∑'; font-weight: 400; opacity: 0.8; margin-right: 8px; font-size: 16px; }
-        .row-daily-total .col-amount { font-size: 16px; }
+        /* 修改：加總金額 16px -> 17px */
+        .row-daily-total .col-amount { font-size: 17px; }
 
-        /* 當日返水 (綠色文字) */
+        /* 當日返水 */
         .row-daily-rebate td { 
             background-color: transparent !important;
             color: var(--accent-green) !important; 
             font-weight: 800;
         }
-        .row-daily-rebate .col-game { display: table-cell; vertical-align: middle; gap: 6px; font-size: 14px; }
+        /* 修改：返水欄位 14px -> 15px */
+        .row-daily-rebate .col-game { display: table-cell; vertical-align: middle; gap: 6px; font-size: 15px; }
         .row-daily-rebate .col-game::before { content: '💎'; font-weight: 400; opacity: 0.9; margin-right: 8px; font-size: 14px; }
-        .row-daily-rebate .col-amount { font-size: 16px; }
+        /* 修改：返水金額 16px -> 17px */
+        .row-daily-rebate .col-amount { font-size: 17px; }
         
         .date-dim { opacity: 0.2; font-family: serif; }
 
         /* Footer */
         .footer-rules { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-subtle); color: var(--text-muted); }
         .footer-title { font-size: 14px; font-weight: 700; color: var(--text-dim); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
-        .rules-list { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8; color: var(--text-muted); }
+        /* 修改：規則說明文字 13px -> 14px，行高微調增加易讀性 */
+        .rules-list { list-style: none; padding: 0; margin: 0; font-size: 14px; line-height: 1.7; color: var(--text-muted); }
         .rules-list li { position: relative; padding-left: 16px; margin-bottom: 10px; }
         .rules-list li::before { content: "•"; position: absolute; left: 0; color: var(--text-dim); font-size: 16px; line-height: 1.2; }
         .rule-highlight { color: var(--accent-gold); font-family: 'JetBrains Mono', monospace; background: var(--accent-gold-dim); padding: 2px 6px; border-radius: 4px; }
-        .copyright { margin-top: 50px; text-align: center; font-size: 11px; color: var(--text-dim); opacity: 0.6; }
+        .copyright { margin-top: 50px; text-align: center; font-size: 12px; color: var(--text-dim); opacity: 0.6; }
 
         /* Utilities */
         .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%); background-size: 200% 100%; animation: pulse 1.5s infinite; color: transparent !important; border-radius: 4px; }
-        .error-msg { text-align: center; padding: 30px 20px; color: var(--text-muted); background: rgba(255, 50, 50, 0.05); border-radius: var(--radius-md); border: 1px dashed rgba(255, 50, 50, 0.2); margin-top: 30px; font-size: 14px; line-height: 1.6; }
+        .error-msg { text-align: center; padding: 30px 20px; color: var(--text-muted); background: rgba(255, 50, 50, 0.05); border-radius: var(--radius-md); border: 1px dashed rgba(255, 50, 50, 0.2); margin-top: 30px; font-size: 15px; line-height: 1.6; }
         @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
@@ -256,7 +272,8 @@
                     </div>
                     <div class="card stat-card">
                         <div class="stat-label" data-i18n="status_label">當前活動資格</div>
-                        <div class="stat-value" id="val-qualify" style="font-size: 13px;">---</div>
+                        <!-- 內聯樣式覆蓋字體，這裡稍微加大到 14px -->
+                        <div class="stat-value" id="val-qualify" style="font-size: 14px;">---</div>
                     </div>
                 </div>
             </main>
@@ -388,7 +405,7 @@
             let title = t.err_data_title, desc = debugInfo;
             if (type === 'missing') { title = t.err_missing_title; desc = t.err_missing_desc; }
             else if (type === 'connection') { title = t.err_conn_title; desc = t.err_conn_desc; }
-            document.getElementById('app-content').innerHTML = `<div class="error-msg"><h3>${title}</h3><p>${desc}</p>${debugInfo && type !== 'missing' ? `<p style="font-size:10px; color:#aaa; margin-top:10px;">${debugInfo}</p>` : ''}</div>`;
+            document.getElementById('app-content').innerHTML = `<div class="error-msg"><h3>${title}</h3><p>${desc}</p>${debugInfo && type !== 'missing' ? `<p style="font-size:12px; color:#aaa; margin-top:10px;">${debugInfo}</p>` : ''}</div>`;
         }
 
         function changeLang(lang) {
