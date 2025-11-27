@@ -124,19 +124,23 @@
         .tier-rate { font-size: 18px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
         .tier-item.active .tier-rate { color: var(--accent-gold); }
 
-        /* --- History Table (已修復線條問題) --- */
+/* --- History Table (優化版) --- */
         .history-card { 
             padding: 0; 
+            /* 建議：將邊框移至這裡，並確保顏色與表格線條一致 */
             border: 1px solid var(--border-subtle); 
             border-radius: var(--radius-lg);
             overflow: hidden; 
+            /* 加入此屬性以修復部分瀏覽器圓角內內容溢出的渲染 bug */
+            transform: translateZ(0); 
             background: var(--surface-glass);
         }
 
         .history-table { 
             width: 100%; 
-            /* 修正：使用 separate + spacing 0 來確保線條完美對齊且不模糊 */
-            border-collapse: separate; 
+            /* 修正 1：改用 collapse，這是解決線條錯位與模糊的核心 */
+            border-collapse: collapse; 
+            /* collapse 模式下不需要 spacing */
             border-spacing: 0;
             table-layout: fixed;
             font-size: 14px; 
@@ -150,23 +154,24 @@
             padding: 14px 16px; 
             font-size: 12px; 
             text-transform: uppercase; 
-            /* 修正：確保邊框顏色統一 */
             border-bottom: 1px solid var(--border-subtle); 
             white-space: nowrap;
         }
 
         .history-table td { 
             padding: 16px 16px; 
-            /* 修正：確保邊框顏色統一 */
             border-bottom: 1px solid var(--border-subtle); 
             color: var(--text-main); 
+            /* 確保所有單元格垂直置中，避免高度運算誤差 */
             vertical-align: middle; 
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            /* 修正 2：確保行高一致，避免 flex 撐開高度 */
+            line-height: 1.5; 
         }
 
-        /* 移除最後一列的底線，避免與卡片邊框重疊變粗 */
+        /* 移除最後一列的底線，避免與卡片外框重疊變粗 */
         .history-table tr:last-child td { 
             border-bottom: none; 
         }
@@ -179,14 +184,34 @@
             font-size: 15px; 
         }
         
+        /* --- 特殊行樣式優化 --- */
+
         /* 當日加總 (金色文字) */
         .row-daily-total td { 
             background-color: transparent !important;
             color: var(--accent-gold) !important; 
             font-weight: 800;
         }
-        .row-daily-total .col-game { display: flex; align-items: center; gap: 6px; font-size: 14px; }
-        .row-daily-total .col-game::before { content: '∑'; font-weight: 400; opacity: 0.8; margin-right: 2px; font-size: 16px; }
+        
+        /* 修正 3：不要對 td 使用 display: flex */
+        /* 改用 inline-flex 讓它在保持 table-cell 特性的同時對齊圖示 */
+        .row-daily-total .col-game { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            font-size: 14px; 
+            /* 確保繼承父層的高度對齊 */
+            vertical-align: middle; 
+            width: 100%; /* 確保內容佔滿 */
+        }
+        .row-daily-total .col-game::before { 
+            content: '∑'; 
+            font-weight: 400; 
+            opacity: 0.8; 
+            /* 微調符號位置，避免撐開行高 */
+            line-height: 1; 
+            font-size: 16px; 
+        }
         .row-daily-total .col-amount { font-size: 16px; }
 
         /* 當日返水 (綠色文字) */
@@ -195,8 +220,23 @@
             color: var(--accent-green) !important; 
             font-weight: 800;
         }
-        .row-daily-rebate .col-game { display: flex; align-items: center; gap: 6px; font-size: 14px; }
-        .row-daily-rebate .col-game::before { content: '💎'; font-weight: 400; opacity: 0.9; margin-right: 2px; font-size: 14px; }
+        
+        /* 同樣修正為 inline-flex */
+        .row-daily-rebate .col-game { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            font-size: 14px; 
+            vertical-align: middle;
+            width: 100%;
+        }
+        .row-daily-rebate .col-game::before { 
+            content: '💎'; 
+            font-weight: 400; 
+            opacity: 0.9; 
+            line-height: 1; 
+            font-size: 14px; 
+        }
         .row-daily-rebate .col-amount { font-size: 16px; }
         
         .date-dim { opacity: 0.2; font-family: serif; }
