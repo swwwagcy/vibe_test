@@ -2,517 +2,891 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Diamond Rebate Dashboard</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雙 12 直播狂歡 | Double 12 Live Carnival</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-body: #0B0E14;
-            --surface-glass: rgba(30, 35, 48, 0.85);
-            --surface-solid: #1C212E;
-            --border-subtle: rgba(255, 255, 255, 0.12);
-            --accent-gold: #FACC15;
-            --accent-gold-dim: rgba(250, 204, 21, 0.15);
-            --accent-gold-glow: rgba(250, 204, 21, 0.35);
-            --accent-green: #34D399;
-            --accent-green-dim: rgba(52, 211, 153, 0.15);
-            --accent-red: #F43F5E;
-            --text-main: #FFFFFF;
-            --text-muted: #9CA3AF;
-            --text-dim: #6B7280;
-            --text-highlight: #F3F4F6;
-            --radius-lg: 24px;
-            --radius-md: 16px;
-            --radius-sm: 10px;
+            --bg-deep: #050505;
+            --bg-panel: #141416;
+            --accent: #00d2be;
+            --gold-start: #bf953f;
+            --gold-mid: #fcf6ba;
+            --gold-end: #b38728;
+            --text-main: #ffffff;
+            --text-sub: #d0d0d0;
+            --border-color: rgba(255, 255, 255, 0.15);
+            --row-height: 42px;
+            --font-stack: 'Roboto', 'Noto Sans TC', sans-serif;
         }
 
-        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            margin: 0;
-            padding: 20px 20px 80px 20px;
-            background-color: var(--bg-body);
-            font-family: 'Inter', 'Noto Sans TC', 'Noto Sans SC', 'Noto Sans JP', sans-serif;
+            font-family: var(--font-stack);
+            background-color: var(--bg-deep);
             color: var(--text-main);
-            background-image: 
-                radial-gradient(circle at 10% 10%, rgba(244, 63, 94, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 90% 90%, rgba(250, 204, 21, 0.08) 0%, transparent 50%);
-            background-attachment: fixed;
             min-height: 100vh;
-            /* 修改：基礎字體從 14px 提升至 16px */
-            font-size: 16px;
-        }
-
-        .dashboard-container {
-            max-width: 500px;
-            margin: 0 auto;
             display: flex;
-            flex-direction: column;
-            gap: 24px; 
+            justify-content: center;
+            padding: 20px 15px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 210, 190, 0.1) 0%, transparent 60%),
+                linear-gradient(180deg, rgba(20,20,20,0) 0%, rgba(0,0,0,1) 100%);
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- Language Switcher --- */
-        .lang-switch-container {
+        .container {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- Diamond Styling --- */
+        .d-emoji {
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            display: inline-block;
+            line-height: 1;
+            margin-left: 6px;
+            position: relative;
+            top: -0.12em; 
+        }
+
+        .d-cyan {
+            filter: sepia(100%) hue-rotate(125deg) saturate(350%) brightness(1.1) drop-shadow(0 0 5px rgba(0, 210, 190, 0.4));
+        }
+
+        .d-gold-real {
+            filter: sepia(100%) saturate(1000%) hue-rotate(10deg) brightness(1.2) contrast(1.1) drop-shadow(0 0 8px rgba(252, 246, 186, 0.6));
+        }
+
+        .d-label-icon { font-size: 0.75em; } 
+        
+        .d-hero { 
+            font-size: 0.9em; 
+            margin-right: 12px;
+            margin-left: 0;
+            top: 0;
+        }
+
+        /* --- Components --- */
+        .lang-switch {
             display: flex;
             justify-content: flex-end;
-            gap: 6px;
-            width: 100%;
-            padding-bottom: 4px;
-            z-index: 10;
+            gap: 8px;
+            margin-bottom: 20px;
         }
 
         .lang-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: var(--text-muted);
-            padding: 4px 10px; /* 微調按鈕內距 */
-            border-radius: 14px;
-            font-size: 11px; /* 微調：11px -> 12px */
-            font-weight: 500;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            color: #ccc;
+            padding: 4px 14px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: inherit;
+            font-size: 12px;
+            transition: all 0.3s;
         }
 
-        .lang-btn:active { transform: scale(0.95); }
-        .lang-btn.active { 
-            background: var(--accent-gold); 
-            color: #000; 
-            border-color: var(--accent-gold); 
-            font-weight: 800; 
-            box-shadow: 0 0 8px var(--accent-gold-glow); 
+        .lang-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+            font-weight: 700;
         }
 
-        /* --- Header --- */
-        .promo-header { text-align: center; margin-bottom: 12px; }
-        /* 修改：標題加大 32px -> 36px */
-        .promo-title { margin: 0 0 10px 0; font-size: 36px; font-weight: 900; background: linear-gradient(135deg, #FFF 40%, var(--accent-gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; line-height: 1.2; }
-        /* 修改：副標題加大 14px -> 15px */
-        .promo-subtitle { font-size: 15px; color: var(--text-muted); margin: 0 0 18px 0; line-height: 1.5; }
-        .game-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
-        /* 修改：Tag 字體加大 12px -> 13px */
-        .game-tag { font-size: 13px; padding: 6px 14px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle); color: var(--text-highlight); display: flex; align-items: center; gap: 5px; white-space: nowrap; }
-
-        /* --- Section Title --- */
-        /* 修改：區塊標題加大 17px -> 19px */
-        .section-title { font-size: 19px; font-weight: 700; color: var(--text-highlight); margin-top: 18px; margin-bottom: 16px; padding-left: 12px; border-left: 4px solid var(--accent-gold); line-height: 1.2; }
-
-        /* --- Cards Common --- */
-        .card { background: var(--surface-glass); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); }
-
-        /* --- Hero Card --- */
-        .hero-card { padding: 28px 24px; text-align: center; background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 100%); border: 1px solid rgba(250, 204, 21, 0.3); box-shadow: 0 0 50px -10px rgba(250, 204, 21, 0.15); }
-        /* 修改：Hero Label 加大 14px -> 15px */
-        .hero-label { font-size: 15px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; font-weight: 600; }
-        /* 修改：數值保持大字體，無需變動，視覺已足夠 */
-        .hero-value { font-size: 56px; font-weight: 800; color: var(--accent-green); text-shadow: 0 0 30px var(--accent-green-glow); margin: 0; line-height: 1; font-family: 'JetBrains Mono', monospace; letter-spacing: -2px; }
-
-        /* --- Bento Grid --- */
-        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
-        .stat-card { display: flex; flex-direction: column; justify-content: center; padding: 22px 20px; }
-        /* 修改：Stat Label 加大 13px -> 14px */
-        .stat-label { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
-        /* 修改：Stat Value 加大 22px -> 26px */
-        .stat-value { font-size: 26px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
-
-        /* --- Progress Bar --- */
-        .progress-section { margin-top: 28px; text-align: left; }
-        /* 修改：進度條文字 13px -> 14px */
-        .progress-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; color: var(--text-muted); font-weight: 600; }
-        .progress-track { height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-gold), #FFF); width: 0%; border-radius: 10px; transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 0 15px var(--accent-gold-glow); }
-
-        /* --- Tier List --- */
-        .tier-list { display: flex; flex-direction: column; gap: 10px; }
-        .tier-item { display: flex; justify-content: space-between; align-items: center; background: var(--surface-solid); padding: 18px 20px; border-radius: var(--radius-sm); border: 1px solid transparent; transition: all 0.3s; }
-        .tier-item.active { background: var(--accent-gold-dim); border-color: rgba(250, 204, 21, 0.4); transform: scale(1.01); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        /* 修改：區間文字 14px -> 15px */
-        .tier-range { font-size: 15px; color: var(--text-muted); font-weight: 500; }
-        /* 修改：比例文字 18px -> 20px */
-        .tier-rate { font-size: 20px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
-        .tier-item.active .tier-rate { color: var(--accent-gold); }
-
-        /* --- History Table --- */
-        .history-card { 
-            padding: 0; 
-            border: 1px solid var(--border-subtle); 
-            border-radius: var(--radius-lg);
-            overflow: hidden; 
-            background: var(--surface-glass);
+        .hero {
+            text-align: center;
+            margin-bottom: 35px;
         }
 
-        .history-table { 
+        .date-badge {
+            color: var(--accent);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0, 210, 190, 0.4);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 15px;
+            font-style: normal;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+            white-space: nowrap;
+        }
+
+        .marketing-box { margin-bottom: 20px; }
+
+        .campaign-tag {
+            display: inline-block;
+            background: linear-gradient(90deg, transparent, rgba(0, 210, 190, 0.15), transparent);
+            border-top: 1px solid var(--accent);
+            border-bottom: 1px solid var(--accent);
+            color: #fff;
+            padding: 4px 20px;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .campaign-highlight {
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 1.8;
+            color: #eee;
+        }
+
+        .gold-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 5px;
+        }
+
+        .gold-text {
+            font-size: clamp(2.2rem, 10vw, 3.5rem);
+            font-weight: 900;
+            background: linear-gradient(to right, var(--gold-start), var(--gold-mid), var(--gold-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(252, 246, 186, 0.2);
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: #000;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 12px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(0, 210, 190, 0.3);
+            transition: all 0.2s;
+            margin-top: 2px;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(0, 210, 190, 0.5);
+            background: #fff;
+        }
+
+        /* --- Dashboard --- */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .dashboard { grid-template-columns: 1fr; }
+        }
+
+        .dash-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dash-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .dash-left { justify-content: space-evenly; }
+        .dash-right { justify-content: center; }
+
+        .stats-block { text-align: center; width: 100%; }
+
+        .stats-label-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2px;
+            line-height: 1.5;
+        }
+
+        .stats-label {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .stats-val {
+            line-height: 1;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            font-family: 'Roboto', sans-serif;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+        }
+
+        .stats-val.rank-text { 
+            font-size: clamp(2.5rem, 8vw, 3.2rem); 
+            color: var(--accent); 
+        }
+        
+        .stats-val.total-text { 
+            font-size: clamp(2rem, 6vw, 2.5rem); 
+            color: #fff; 
+        }
+
+        .divider {
+            width: 60%;
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin: 13px auto;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 44px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .detail-row:last-child { border-bottom: none; }
+        
+        .d-label-group { display: flex; align-items: center; }
+        .d-label { color: var(--text-sub); font-size: 0.9rem; font-weight: 500; }
+        .d-val { 
+            color: #fff; 
+            font-weight: 700; 
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            font-family: 'Roboto', sans-serif; 
+        }
+
+        /* --- Leaderboard --- */
+        .split-header {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .col-header {
+            background: #1a1a1d;
+            padding: 12px;
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+            border-top: 3px solid var(--accent);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .split-body {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-top: none;
+        }
+
+        @media (max-width: 768px) {
+            .split-header, .split-body { grid-template-columns: 1.3fr 1fr; }
+            .col-header { font-size: 0.9rem; padding: 10px 5px;}
+        }
+
+        .align-row {
+            height: var(--row-height);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1rem;
+        }
+        
+        .align-row:last-child { border-bottom: none; }
+
+        .lb-col { border-right: 1px solid var(--border-color); }
+        .lb-rank { width: 40px; font-weight: 900; color: #666; font-style: italic; font-size: 1.1rem; }
+        
+        .lb-score { 
+            margin-left: auto; 
+            color: #fff; 
+            font-weight: 700; 
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .rank-1 { color: var(--gold-mid); text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); font-size: 1.3rem; }
+        .rank-2 { color: #e0e0e0; text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); font-size: 1.3rem; }
+        .rank-3 { color: #d4a58e; text-shadow: 0 0 10px rgba(212, 165, 142, 0.4); font-size: 1.3rem; }
+
+        .r-val { 
             width: 100%; 
-            border-collapse: separate; 
-            border-spacing: 0;
-            table-layout: fixed;
-            /* 修改：表格內文稍微加大 14px -> 15px */
-            font-size: 14px; 
-            text-align: left; 
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; 
+            color: var(--accent); 
+            font-weight: 700; 
+            font-family: 'Roboto', sans-serif; 
         }
 
-        .history-table th { 
-            background: rgba(255, 255, 255, 0.03); 
-            color: var(--text-muted); 
-            font-weight: 600; 
-            padding: 14px 16px; 
-            /* 修改：表頭文字 12px -> 13px */
-            font-size: 13px; 
-            text-transform: uppercase; 
-            border-bottom: 1px solid var(--border-subtle); 
-            white-space: nowrap;
+        .rules-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            color: #ccc;
+        }
+        .rules-title { font-weight: 700; color: #fff; margin-bottom: 15px; font-size: 1.1rem; border-left: 3px solid var(--accent); padding-left: 10px;}
+        .rules-list { list-style: none; padding-left: 0; }
+        .rules-list li {
+            margin-bottom: 6px;
+            line-height: 1.5;
+            font-size: 0.9rem;
+            padding-left: 20px;
+            position: relative;
+        }
+        .rules-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0; top: 0;
+            color: var(--accent);
+            font-size: 1.5rem;
+            line-height: 1.3rem;
         }
 
-        .history-table td { 
-            padding: 16px 16px; 
-            border-bottom: 1px solid var(--border-subtle); 
-            color: var(--text-main); 
-            vertical-align: middle; 
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .history-table tr:last-child td { 
-            border-bottom: none; 
-        }
-
-        .col-amount { 
-            text-align: right; 
-            font-family: 'JetBrains Mono', monospace; 
-            font-weight: 600; 
-            letter-spacing: -0.5px; 
-            /* 修改：金額數字 15px -> 16px */
-            font-size: 16px; 
+        /* Error Message Styling */
+        .error-msg {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 50, 50, 0.08);
+            color: var(--text-sub);
+            margin-bottom: 30px;
+            border: 1px dashed rgba(255, 50, 50, 0.3);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         
-        /* 當日加總 */
-        .row-daily-total td { 
-            background-color: transparent !important;
-            color: var(--accent-gold) !important; 
-            font-weight: 800;
+        .error-msg h3 {
+            color: #ff8080;
+            font-size: 1.2rem;
+            margin: 0;
         }
-        /* 修改：遊戲名稱欄位 14px -> 15px */
-        .row-daily-total .col-game { display: table-cell; vertical-align: middle; gap: 6px; font-size: 15px; }
-        .row-daily-total .col-game::before { content: '∑'; font-weight: 400; opacity: 0.8; margin-right: 8px; font-size: 16px; }
-        /* 修改：加總金額 16px -> 17px */
-        .row-daily-total .col-amount { font-size: 17px; }
-
-        /* 當日返水 */
-        .row-daily-rebate td { 
-            background-color: transparent !important;
-            color: var(--accent-green) !important; 
-            font-weight: 800;
-        }
-        /* 修改：返水欄位 14px -> 15px */
-        .row-daily-rebate .col-game { display: table-cell; vertical-align: middle; gap: 6px; font-size: 15px; }
-        .row-daily-rebate .col-game::before { content: '💎'; font-weight: 400; opacity: 0.9; margin-right: 6px; font-size: 14px; }
-        /* 修改：返水金額 16px -> 17px */
-        .row-daily-rebate .col-amount { font-size: 17px; }
         
-        .date-dim { opacity: 0.2; font-family: serif; }
+        .error-msg p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .error-debug {
+            font-size: 0.8rem;
+            color: #777;
+            margin-top: 5px;
+            font-family: monospace;
+        }
+        
+        .loading-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(2px);
+            border-radius: 8px;
+        }
+        .spinner {
+            width: 30px; height: 30px;
+            border: 3px solid var(--accent);
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Footer */
-        .footer-rules { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-subtle); color: var(--text-muted); }
-        .footer-title { font-size: 14px; font-weight: 700; color: var(--text-dim); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
-        /* 修改：規則說明文字 13px -> 14px，行高微調增加易讀性 */
-        .rules-list { list-style: none; padding: 0; margin: 0; font-size: 14px; line-height: 1.7; color: var(--text-muted); }
-        .rules-list li { position: relative; padding-left: 16px; margin-bottom: 10px; }
-        .rules-list li::before { content: "•"; position: absolute; left: 0; color: var(--text-dim); font-size: 16px; line-height: 1.2; }
-        .rule-highlight { color: var(--accent-gold); font-family: 'JetBrains Mono', monospace; background: var(--accent-gold-dim); padding: 2px 6px; border-radius: 4px; }
-        .copyright { margin-top: 50px; text-align: center; font-size: 12px; color: var(--text-dim); opacity: 0.6; }
-
-        /* Utilities */
-        .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%); background-size: 200% 100%; animation: pulse 1.5s infinite; color: transparent !important; border-radius: 4px; }
-        .error-msg { text-align: center; padding: 30px 20px; color: var(--text-muted); background: rgba(255, 50, 50, 0.05); border-radius: var(--radius-md); border: 1px dashed rgba(255, 50, 50, 0.2); margin-top: 30px; font-size: 15px; line-height: 1.6; }
-        @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .hidden { display: none !important; }
+        .val-blur { filter: blur(4px); opacity: 0.6; }
     </style>
 </head>
 <body>
 
-    <div class="dashboard-container">
-        <div class="lang-switch-container">
-            <button class="lang-btn active" onclick="changeLang('zh-TW')">繁</button>
-            <button class="lang-btn" onclick="changeLang('zh-CN')">简</button>
-            <button class="lang-btn" onclick="changeLang('en')">EN</button>
-            <button class="lang-btn" onclick="changeLang('jp')">JP</button>
+    <div class="container">
+        <div class="lang-switch">
+            <button class="lang-btn active" onclick="setLang('tc')">繁體</button>
+            <button class="lang-btn" onclick="setLang('sc')">简体</button>
+            <button class="lang-btn" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" onclick="setLang('jp')">日本語</button>
         </div>
-        <div id="app-content">
-            <header class="promo-header">
-                <h1 class="promo-title" data-i18n="title">直播間遊戲<br>天天返鑽石 💎</h1>
-                <p class="promo-subtitle" data-i18n="subtitle">玩直播間任一款遊戲，天天返鑽石！</p>
-                <div class="game-tags">
-                    <span class="game-tag" data-i18n="game_1">🐉 龍乳鬥白虎</span>
-                    <span class="game-tag" data-i18n="game_2">💈 一柱擎天</span>
-                    <span class="game-tag" data-i18n="game_3">🌪️ 金射狂風</span>
-                </div>
-            </header>
-            <main>
-                <div class="card hero-card">
-                    <div class="hero-label" data-i18n="hero_label">✨ 預計明日返水 (鑽)</div>
-                    <div class="hero-value skeleton" id="val-rebate">00,000</div>
-                    <div class="progress-section">
-                        <div class="progress-header">
-                            <span id="tier-status">Loading...</span>
-                            <span id="next-diff">---</span>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-fill" id="progress-bar"></div>
-                        </div>
+
+        <div class="hero">
+            <div class="date-badge" data-i18n="date">12/12 - 12/17</div>
+            <h1 data-i18n="title">雙 12 直播狂歡</h1>
+            <div class="marketing-box">
+                <div class="campaign-tag" data-i18n="subtitle">直播耗鑽排行榜</div>
+                <div class="campaign-highlight">
+                    <span data-i18n="desc_prefix">應援人氣女神奪大獎，前十名瓜分總計</span><br>
+                    <div class="gold-row">
+                        <span class="d-emoji d-hero d-gold-real">💎</span>
+                        <span class="gold-text">550,000</span>
                     </div>
                 </div>
-                <div class="bento-grid">
-                    <div class="card stat-card">
-                        <div class="stat-label" data-i18n="daily_bet_label">今日下注總點數</div>
-                        <div class="stat-value skeleton" id="val-total">0</div>
+            </div>
+            <div>
+                <a href="https://creators.swag.live/d12d" class="cta-btn" data-i18n="cta" target="_blank">查看人氣女神活動</a>
+            </div>
+        </div>
+
+        <!-- Error Message Container (Initially Hidden) -->
+        <div id="error-msg" class="error-msg hidden">
+            <!-- Dynamic Content -->
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard-container" class="dashboard" style="position: relative;">
+            <!-- Loading Overlay -->
+            <div id="loading-dash" class="loading-overlay hidden">
+                <div class="spinner"></div>
+            </div>
+
+            <!-- Left: Rank & Total -->
+            <div class="dash-card dash-left">
+                <div class="stats-block">
+                    <div class="stats-label" data-i18n="current_rank">當前排名</div>
+                    <div class="stats-val rank-text" id="disp-rank">--</div>
+                </div>
+                <div class="divider"></div>
+                <div class="stats-block">
+                    <div class="stats-label-group">
+                        <span class="stats-label" data-i18n="total_spent">總消費</span>
+                        <span class="d-emoji d-label-icon d-cyan">💎</span>
                     </div>
-                    <div class="card stat-card">
-                        <div class="stat-label" data-i18n="status_label">當前活動資格</div>
-                        <!-- 內聯樣式覆蓋字體，這裡稍微加大到 14px -->
-                        <div class="stat-value" id="val-qualify" style="font-size: 16px;">---</div>
+                    <div class="stats-val total-text">
+                        <span id="disp-total">0</span>
                     </div>
                 </div>
-            </main>
-            <section>
-                <div class="section-title" data-i18n="rate_title">📊 鑽石回饋比例</div>
-                <div class="tier-list">
-                    <div class="tier-item" id="tier-3">
-                        <div class="tier-range" data-i18n="tier_3_range">1,000 萬以上</div>
-                        <div class="tier-rate">1.8%</div>
+            </div>
+
+            <!-- Right: Details -->
+            <div class="dash-card dash-right">
+                <div class="detail-row">
+                    <div class="d-label-group">
+                        <span class="d-label" data-i18n="breakdown_gift">直播禮物</span>
+                        <span class="d-emoji d-label-icon d-cyan">💎</span>
                     </div>
-                    <div class="tier-item" id="tier-2">
-                        <div class="tier-range" data-i18n="tier_2_range">100 萬 ~ 999 萬</div>
-                        <div class="tier-rate">1.4%</div>
-                    </div>
-                    <div class="tier-item" id="tier-1">
-                        <div class="tier-range" data-i18n="tier_1_range">5,000 ~ 99 萬</div>
-                        <div class="tier-rate">0.7%</div>
-                    </div>
+                    <div class="d-val"><span id="disp-gift">0</span></div>
                 </div>
-            </section>
-            <section>
-                <div class="section-title" data-i18n="history_title">📅 近 3 日下注紀錄</div>
-                <div class="card history-card">
-                    <table class="history-table">
-                        <!-- 固定欄寬比例，確保對齊 -->
-                        <colgroup>
-                            <col style="width: 20%;">
-                            <col style="width: 45%;">
-                            <col style="width: 35%;">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th data-i18n="table_date">日期</th>
-                                <th data-i18n="table_game">遊戲</th>
-                                <th class="col-amount" data-i18n="table_amount">下注總額</th>
-                            </tr>
-                        </thead>
-                        <tbody id="history-tbody">
-                            <tr><td><div class="skeleton" style="width:30px; height:12px;"></div></td><td><div class="skeleton" style="width:80px; height:12px;"></div></td><td><div class="skeleton" style="width:50px; height:12px; float:right;"></div></td></tr>
-                            <tr><td><div class="skeleton" style="width:30px; height:12px;"></div></td><td><div class="skeleton" style="width:80px; height:12px;"></div></td><td><div class="skeleton" style="width:50px; height:12px; float:right;"></div></td></tr>
-                        </tbody>
-                    </table>
+                <div class="detail-row">
+                    <div class="d-label-group">
+                        <span class="d-label" data-i18n="breakdown_ticket">限時表演</span>
+                        <span class="d-emoji d-label-icon d-cyan">💎</span>
+                    </div>
+                    <div class="d-val"><span id="disp-ticket">0</span></div>
                 </div>
-            </section>
-            <footer class="footer-rules">
-                <div class="footer-title" data-i18n="footer_title">ℹ️ 活動說明</div>
-                <ul class="rules-list" id="footer-rules-list"></ul>
-                <div class="copyright">© 2025 SWAG. All Rights Reserved.</div>
-            </footer>
+                <div class="detail-row">
+                    <div class="d-label-group">
+                        <span class="d-label" data-i18n="breakdown_menu">挑逗表演</span>
+                        <span class="d-emoji d-label-icon d-cyan">💎</span>
+                    </div>
+                    <div class="d-val"><span id="disp-command">0</span></div>
+                </div>
+                <div class="detail-row">
+                    <div class="d-label-group">
+                        <span class="d-label" data-i18n="breakdown_lovense">震動控制</span>
+                        <span class="d-emoji d-label-icon d-cyan">💎</span>
+                    </div>
+                    <div class="d-val"><span id="disp-lovense">0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="split-header">
+            <div class="col-header">
+                <div class="header-content">
+                    <span data-i18n="lb_title">總鑽排行榜</span>
+                    <span class="d-emoji d-label-icon d-cyan">💎</span>
+                </div>
+            </div>
+            <div class="col-header">
+                <div class="header-content">
+                    <span data-i18n="rewards_title">排名獎勵</span>
+                    <span class="d-emoji d-label-icon d-cyan">💎</span>
+                </div>
+            </div>
+        </div>
+        <div class="split-body">
+            <div class="lb-col" id="leaderboard-body"></div>
+            <div class="reward-col" id="rewards-body"></div>
+        </div>
+
+        <!-- Rules -->
+        <div class="rules-section">
+            <div class="rules-title" data-i18n="rules_title">活動說明</div>
+            <ul class="rules-list" id="rules-list"></ul>
         </div>
     </div>
 
     <script>
-        const API_URL = 'https://game-rebate-api-905468082258.asia-east1.run.app';
+        // Integration Logic: API URL
+        // 修正：移除結尾斜線，確保與 Query String 拼接正確
+        const API_BASE_URL = "https://campaign-api-905468082258.asia-east1.run.app"; 
 
-        const fmt = (n) => new Intl.NumberFormat('en-US').format(n);
-        let cachedData = null; 
-        let currentLang = 'zh-TW';
-        let currentError = null; 
+        let currentLang = 'tc';
+        let currentErrorState = null; 
 
         const TRANSLATIONS = {
-            'zh-TW': {
-                title: '直播間遊戲<br>天天返鑽石 💎', subtitle: '11/28 - 12/2 玩直播間下列任一款遊戲<br>當日滿 5,000 鑽，即享返鑽資格（隔日派送）',
-                game_1: '🐉 龍乳鬥白虎', game_2: '💈 一柱擎天', game_3: '🌪️ 金射狂風',
-                hero_label: '✨ 預計明日返鑽', daily_bet_label: '今日下注總鑽數', status_label: '當前活動資格',
-                rate_title: '📊 鑽石回饋比例', tier_3_range: '1,000 萬以上', tier_2_range: '1,000,000 ~ 9,999,999', tier_1_range: '5,000 ~ 999,999',
-                history_title: '📅 下注紀錄', table_date: '日期', table_game: '遊戲', table_amount: '總額',
-                footer_title: 'ℹ️ 活動說明', qualify_yes: '✅ 符合資格', qualify_no: '⏳ 尚未達標',
-                tier_current: '當前返鑽率', tier_max: '已達最高層級 🚀', tier_diff: '差 {n} 升級', loading: '載入中...', no_record: '尚無紀錄',
-                err_missing_title: '⚠️ 缺少用戶資訊', err_missing_desc: '請登入 SWAG 後再使用本頁面。',
-                err_conn_title: '連線錯誤', err_conn_desc: '無法連接至伺服器，請稍後再試。', err_data_title: '數據讀取失敗',
-                game_map: { '龍乳鬥白虎': '龍乳鬥白虎', '一柱擎天': '一柱擎天', '金射狂風': '金射狂風', '當日加總': '當日加總', '當日返水': '當日返水' },
-                rules: ['11/28 00:00 - 12/2 23:59 UTC+8，每日下注總額滿 <strong>5,000</strong> 鑽石即享鑽石返還。', '活動期間之返鑽將於隔日 01:00 前發放至所屬帳號內。', '舉例：<span class="rule-highlight">11/29 01:00</span> 前發放 11/28 全天的返鑽，時區為 UTC+8。', '僅計直播間三款遊戲：「龍乳鬥白虎」、「一柱擎天」、「金射狂風」 的有效投注加總鑽石數。', '返鑽數量四捨五入小數點後一位。舉例：前日下注 52,400 鑽次日返水為 52,400 * 0.7% = 366.8，實際將發放 <span class="rule-highlight">367</span> 鑽。', '投注模式異常者，系統有權取消返鑽資格。', '實際返鑽以系統計算為準，資料更新時間為 5 分鐘，需登入帳號以正確顯示。', '活動頁面僅呈現活動期間之遊戲紀錄。']
+            tc: {
+                date: "12/12 00:00 - 12/17 23:59 (GMT+8)",
+                title: "雙 12 直播狂歡",
+                subtitle: "直播耗鑽排行榜",
+                desc_prefix: "應援人氣女神奪大獎，前十名瓜分總計",
+                cta: "查看人氣女神活動",
+                current_rank: "當前排名",
+                total_spent: "總消費",
+                lb_title: "總鑽排行榜",
+                rewards_title: "排名獎勵",
+                breakdown_gift: "直播禮物",
+                breakdown_ticket: "限時表演",
+                breakdown_menu: "挑逗表演",
+                breakdown_lovense: "震動控制",
+                rules_title: "活動說明",
+                // Error Messages
+                err_missing_title: '⚠️ 缺少用戶資訊', 
+                err_missing_desc: '請登入 SWAG 後再使用本頁面。',
+                err_conn_title: '連線錯誤', 
+                err_conn_desc: '無法連接至伺服器，請稍後再試。', 
+                err_data_title: '數據讀取失敗',
+                rules_list: [
+                    "直播間總鑽石僅計算：「直播禮物」、「限時表演票券」、「挑逗表演」、「震動控制」。",
+                    "排行榜鑽石相同者，以先達成者排名在前。",
+                    "排名鑽石獎勵將於活動結束後 3 個工作天內派發。",
+                    "資料更新至少 5 分鐘，需登入帳號以正確顯示。",
+                    "最終結果以官方計算為準。"
+                ]
             },
-            'zh-CN': {
-                title: '直播间游戏<br>天天返钻石 💎', subtitle: '11/28 - 12/2 玩直播间下列任一款游戏<br>当日满 5,000 钻，即享返钻资格（隔日派送）',
-                game_1: '🐉 龙乳斗白虎', game_2: '💈 一柱擎天', game_3: '🌪️ 金射狂风',
-                hero_label: '✨ 预计明日返钻', daily_bet_label: '今日下注总钻数', status_label: '当前活动资格',
-                rate_title: '📊 钻石回馈比例', tier_3_range: '1,000 万以上', tier_2_range: '1,000,000 ~ 9,999,999', tier_1_range: '5,000 ~ 999,999',
-                history_title: '📅 下注纪录', table_date: '日期', table_game: '游戏', table_amount: '总额',
-                footer_title: 'ℹ️ 活动说明', qualify_yes: '✅ 符合资格', qualify_no: '⏳ 尚未达标',
-                tier_current: '当前返钻率', tier_max: '已达最高层级 🚀', tier_diff: '差 {n} 升级', loading: '加载中...', no_record: '尚无纪录',
-                err_missing_title: '⚠️ 缺少用户信息', err_missing_desc: '请登入 SWAG 后再使用本页面。',
-                err_conn_title: '连接错误', err_conn_desc: '无法连接至服务器，请稍后再试。', err_data_title: '数据读取失败',
-                game_map: { '龍乳鬥白虎': '龙乳斗白虎', '一柱擎天': '一柱擎天', '金射狂風': '金射狂风', '當日加總': '当日加总', '當日返水': '当日返水' },
-                rules: ['11/28 00:00 - 12/2 23:59 UTC+8，每日下注总额满 <strong>5,000</strong> 钻石即享钻石返还。', '活动期间之返钻将于隔日 01:00 前发放至所属帐号内。', '举例：<span class="rule-highlight">11/29 01:00</span> 前发放 11/28 全天的返钻，时区为 UTC+8。', '仅计直播间三款游戏：「龙乳斗白虎」、「一柱擎天」、「金射狂风」 的有效投注加总钻石数。', '返钻数量四舍五入小数点后一位。举例：前日下注 52,400 钻次日返水为 52,400 * 0.7% = 366.8，实际将发放 <span class="rule-highlight">367</span> 钻。', '投注模式异常者，系统有权取消返钻资格。', '实际返钻以系统计算为准，资料更新时间为 5 分钟，需登入帐号以正确显示。','活动页面仅呈现活动期间之游戏纪录。']
+            sc: {
+                date: "12/12 00:00 - 12/17 23:59 (GMT+8)",
+                title: "双 12 直播狂欢",
+                subtitle: "直播耗钻排行榜",
+                desc_prefix: "应援人气女神夺大奖，前十名瓜分总计",
+                cta: "查看人气女神活动",
+                current_rank: "当前排名",
+                total_spent: "总消费",
+                lb_title: "总钻排行榜",
+                rewards_title: "排名奖励",
+                breakdown_gift: "直播礼物",
+                breakdown_ticket: "限时表演",
+                breakdown_menu: "挑逗表演",
+                breakdown_lovense: "震动控制",
+                rules_title: "活动说明",
+                // Error Messages
+                err_missing_title: '⚠️ 缺少用户信息', 
+                err_missing_desc: '请登入 SWAG 后再使用本页面。',
+                err_conn_title: '连接错误', 
+                err_conn_desc: '无法连接至服务器，请稍后再试。', 
+                err_data_title: '数据读取失败',
+                rules_list: [
+                    "直播间总钻石仅计算：“直播礼物”，“限时表演票券”，“挑逗表演”，“震动控制”。",
+                    "排行榜钻石相同者，以先达成者排名在前。",
+                    "排名钻石奖励将于活动结束后 3 个工作天内派发。",
+                    "资料更新至少 5 分钟，需登入帐号以正确显示。",
+                    "最终结果以官方计算为准。"
+                ]
             },
-            'en': {
-                title: 'Live Games<br>Daily Rebate 💎', subtitle: '11/28 - 12/2 Play any live game and get rebates daily!',
-                game_1: '🐉 Dragon Tiger', game_2: '💈 Soaring High', game_3: '🌪️ Golden Gate',
-                hero_label: '✨ Est. Rebate (Diamonds)', daily_bet_label: 'Total Bet Today', status_label: 'Eligibility',
-                rate_title: '📊 Rebate Rates', tier_3_range: '10M+', tier_2_range: '1,000,000 ~ 9,999,999', tier_1_range: '5,000 ~ 999,999',
-                history_title: '📅 Records', table_date: 'Date', table_game: 'Game', table_amount: 'Total',
-                footer_title: 'ℹ️ Rules', qualify_yes: '✅ Qualified', qualify_no: '⏳ Not Qualified',
-                tier_current: 'Current Tier', tier_max: 'Max Tier Reached 🚀', tier_diff: '{n} to Next Tier', loading: 'Loading...', no_record: 'No records found',
-                err_missing_title: '⚠️ Missing User ID', err_missing_desc: 'Please log in to SWAG before using this page.',
-                err_conn_title: 'Connection Error', err_conn_desc: 'Unable to connect to server. Please try again later.', err_data_title: 'Data Error',
-                game_map: { '龍乳鬥白虎': 'Dragon Tiger', '一柱擎天': 'Soaring High', '金射狂風': 'Golden Gate', '當日加總': 'Daily Total', '當日返水': 'Daily Rebate' },
-                rules: ['11/28 00:00 - 12/2 23:59 UTC+8, daily total bet of <strong>5,000</strong> diamonds required to qualify for rebate.', 'Rebates are issued daily before 01:00 (UTC+8) the following day.', 'Example: Rebates for 11/28 will be issued before <span class="rule-highlight">11/29 01:00</span>.', 'Only valid bets on "Dragon Tiger", "Golden Gate", and "Soaring High" count.', 'Rebates are rounded to 1 decimal place. E.g., 52,400 bet * 0.7% = 366.8 -> <span class="rule-highlight">367</span> diamonds issued.', 'Abnormal betting patterns may result in disqualification.', 'Data is updated every 5 minutes.', 'Login required to view data.']
+            en: {
+                date: "Dec 12 - Dec 17 (GMT+8)",
+                title: "Double 12 Carnival",
+                subtitle: "Diamond Spending Leaderboard",
+                desc_prefix: "Support Goddesses & Win Big! Share total",
+                cta: "View Event",
+                current_rank: "Rank",
+                total_spent: "Total",
+                lb_title: "Total Diamond Leaderboard",
+                rewards_title: "Rewards",
+                breakdown_gift: "Livestream Gift",
+                breakdown_ticket: "Paid Show",
+                breakdown_menu: "Tease Show",
+                breakdown_lovense: "Vibe Control",
+                rules_title: "Rules",
+                // Error Messages
+                err_missing_title: '⚠️ Missing User ID', 
+                err_missing_desc: 'Please log in to SWAG before using this page.',
+                err_conn_title: 'Connection Error', 
+                err_conn_desc: 'Unable to connect to server. Please try again later.', 
+                err_data_title: 'Data Error',
+                rules_list: [
+                    "Total diamonds calculated from: 'Livestream Gift', 'Paid Show', 'Tease Show', 'Vibe Control' only.",
+                    "If diamonds are equal, the first to achieve the amount ranks higher.",
+                    "Rewards distributed within 3 working days after event ends.",
+                    "Data delayed 5+ mins. Log in for accurate view.",
+                    "Official calculation results are final."
+                ]
             },
-            'jp': {
-                title: 'ライブゲーム<br>毎日ダイヤ還元 💎', subtitle: '11/28 - 12/2 対象ゲームを遊んで、毎日還元ゲット！',
-                game_1: '🐉 ドラゴンタイガーファイト', game_2: '💈 高く舞い上がる', game_3: '🌪️ ゴールデンゲート',
-                hero_label: '✨ 明日の予想還元 (ダイヤ)', daily_bet_label: '本日の総ベット', status_label: '現在のステータス',
-                rate_title: '📊 還元率テーブル', tier_3_range: '1,000 万以上', tier_2_range: '1,000,000 ~ 9,999,999', tier_1_range: '5,000 ~ 999,999',
-                history_title: '📅 履歴', table_date: '日付', table_game: 'ゲーム', table_amount: '合計',
-                footer_title: 'ℹ️ イベント詳細', qualify_yes: '✅ 対象', qualify_no: '⏳ 未達',
-                tier_current: '現在のランク', tier_max: '最大ランク到達 🚀', tier_diff: 'ランクアップまで {n}', loading: '読み込み中...', no_record: '履歴なし',
-                err_missing_title: '⚠️ ユーザー情報不足', err_missing_desc: 'ご利用にはログインが必要です。',
-                err_conn_title: '通信エラー', err_conn_desc: 'サーバーに接続できません。後ほどお試しください。', err_data_title: 'データエラー',
-                game_map: { '龍乳鬥白虎': 'ドラゴンタイガーファイト', '一柱擎天': '高く舞い上がる', '金射狂風': 'ゴールデンゲート', '當日加總': '当日合計', '當日返水': '当日還元' },
-                rules: ['11/28 00:00 - 12/2 23:59 UTC+8，毎日総ベット額 <strong>5,000</strong> ダイヤ以上で還元対象となります。', '還元は翌日の 01:00 (UTC+8) までにアカウントに配布されます。', '例：11/28 分の還元は <span class="rule-highlight">11/29 01:00</span> までに配布。', '「ドラゴンタイガー」「ゴールデンゲート」「ソアリングハイ」の有効ベットのみが対象です。', '還元額は小数点第一位を四捨五入します。例：52,400 * 0.7% = 366.8 → <span class="rule-highlight">367</span> ダイヤ配布。', '不正なベットパターンが確認された場合、資格が取り消されることがあります。', 'データは5分ごとに更新されます。データを表示するにはログインが必要です。']
+            jp: {
+                date: "12/12 - 12/17 (GMT+8)",
+                title: "ダブル12 カーニバル",
+                subtitle: "ダイヤ消費ランキング",
+                desc_prefix: "女神を応援して大賞を狙おう！総額",
+                cta: "イベントを見る",
+                current_rank: "現在の順位",
+                total_spent: "合計消費",
+                lb_title: "ランキング",
+                rewards_title: "ランキング報酬",
+                breakdown_gift: "ギフト",
+                breakdown_ticket: "有料ショー",
+                breakdown_menu: "セクシーショー",
+                breakdown_lovense: "リモートバイブ",
+                rules_title: "注意事項",
+                // Error Messages
+                err_missing_title: '⚠️ ユーザー情報不足', 
+                err_missing_desc: 'ご利用にはログインが必要です。',
+                err_conn_title: '通信エラー', 
+                err_conn_desc: 'サーバーに接続できません。後ほどお試しください。', 
+                err_data_title: 'データエラー',
+                rules_list: [
+                    "対象：『ギフト』、『有料ショー』、『セクシーショー』、『リモートバイブ』のみ。",
+                    "同ダイヤ数の場合は、先に達成した方が上位となります。",
+                    "報酬はイベント終了後3営業日以内に配布されます。",
+                    "データは5分以上遅延。正確な表示にはログインが必要です。",
+                    "最終結果は公式の集計に準じます。"
+                ]
             }
         };
 
-        function detectAndSetLanguage() {
-            const browserLang = navigator.language || navigator.userLanguage || 'zh-TW';
-            const lowerLang = browserLang.toLowerCase();
-            let defaultLang = 'zh-TW';
-            if (lowerLang.includes('zh')) defaultLang = (lowerLang.includes('cn') || lowerLang.includes('sg')) ? 'zh-CN' : 'zh-TW';
-            else if (lowerLang.startsWith('en')) defaultLang = 'en';
-            else if (lowerLang.startsWith('ja')) defaultLang = 'jp';
-            changeLang(defaultLang);
-        }
+        const MOCK_LEADERBOARD = [
+            { rank: 1, user_id: '...', total_diamond_cost: 0 },
+            { rank: 2, user_id: '...', total_diamond_cost: 0 },
+            { rank: 3, user_id: '...', total_diamond_cost: 0 },
+            { rank: 4, user_id: '...', total_diamond_cost: 0 },
+            { rank: 5, user_id: '...', total_diamond_cost: 0 },
+            { rank: 6, user_id: '...', total_diamond_cost: 0 },
+            { rank: 7, user_id: '...', total_diamond_cost: 0 },
+            { rank: 8, user_id: '...', total_diamond_cost: 0 },
+            { rank: 9, user_id: '...', total_diamond_cost: 0 },
+            { rank: 10, user_id: '...', total_diamond_cost: 0 }
+        ];
 
-        function showError(type, debugInfo = '') {
-            currentError = { type, debugInfo };
-            const t = TRANSLATIONS[currentLang];
-            let title = t.err_data_title, desc = debugInfo;
-            if (type === 'missing') { title = t.err_missing_title; desc = t.err_missing_desc; }
-            else if (type === 'connection') { title = t.err_conn_title; desc = t.err_conn_desc; }
-            document.getElementById('app-content').innerHTML = `<div class="error-msg"><h3>${title}</h3><p>${desc}</p>${debugInfo && type !== 'missing' ? `<p style="font-size:12px; color:#aaa; margin-top:10px;">${debugInfo}</p>` : ''}</div>`;
-        }
+        const REWARDS = [100000, 90000, 80000, 70000, 60000, 50000, 40000, 30000, 20000, 10000];
+        let currentLeaderboard = [...MOCK_LEADERBOARD];
 
-        function changeLang(lang) {
+        function setLang(lang) {
             currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (
+                    (lang === 'tc' && btn.innerText.includes('繁')) ||
+                    (lang === 'sc' && btn.innerText.includes('简')) ||
+                    (lang === 'en' && btn.innerText.includes('EN')) ||
+                    (lang === 'jp' && btn.innerText.includes('日'))
+                ) {
+                    btn.classList.add('active');
+                }
+            });
+
+            if (currentErrorState) {
+                showError(currentErrorState.type, currentErrorState.debugInfo);
+            }
+
             const t = TRANSLATIONS[lang];
-            const btns = document.querySelectorAll('.lang-btn');
-            btns.forEach(btn => btn.classList.remove('active'));
-            if(lang === 'zh-TW') btns[0].classList.add('active');
-            else if(lang === 'zh-CN') btns[1].classList.add('active');
-            else if(lang === 'en') btns[2].classList.add('active');
-            else if(lang === 'jp') btns[3].classList.add('active');
-
-            if (currentError) { showError(currentError.type, currentError.debugInfo); return; }
-
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (t[key]) el.innerHTML = t[key];
             });
 
-            const rulesList = document.getElementById('footer-rules-list');
-            if (rulesList) {
-                rulesList.innerHTML = '';
-                t.rules.forEach(rule => {
-                    const li = document.createElement('li');
-                    li.innerHTML = rule;
-                    rulesList.appendChild(li);
-                });
-            }
-            const statusEl = document.getElementById('tier-status');
-            if (statusEl && statusEl.innerText.includes('...')) statusEl.innerText = t.loading;
-            if (cachedData) renderDashboard(cachedData);
+            const rulesContainer = document.getElementById('rules-list');
+            rulesContainer.innerHTML = '';
+            t.rules_list.forEach(rule => {
+                const li = document.createElement('li');
+                li.textContent = rule;
+                rulesContainer.appendChild(li);
+            });
         }
 
-        function renderDashboard(data) {
-            cachedData = data;
+        function showError(type, debugInfo = '') {
+            currentErrorState = { type, debugInfo };
             const t = TRANSLATIONS[currentLang];
-            document.querySelectorAll('.skeleton').forEach(el => el.classList.remove('skeleton'));
-            document.getElementById('val-rebate').innerText = fmt(data.est_rebate);
-            document.getElementById('val-total').innerText = fmt(data.total_bet);
+            let title = t.err_data_title;
+            let desc = debugInfo;
             
-            const qEl = document.getElementById('val-qualify');
-            qEl.innerText = data.total_bet >= 5000 ? t.qualify_yes : t.qualify_no;
-            qEl.style.color = data.total_bet >= 5000 ? "var(--accent-green)" : "var(--text-muted)";
-
-            document.getElementById('progress-bar').style.width = `${data.progress_percent}%`;
-            let diffText = data.next_tier_diff <= 0 ? t.tier_max : t.tier_diff.replace('{n}', fmt(data.next_tier_diff));
-            document.getElementById('tier-status').innerText = `${t.tier_current} ${data.current_rate}%`;
-            document.getElementById('next-diff').innerText = diffText;
-            document.getElementById('next-diff').style.color = data.next_tier_diff <= 0 ? "var(--accent-gold)" : "var(--text-muted)";
-
-            document.querySelectorAll('.tier-item').forEach(el => el.classList.remove('active'));
-            if (data.total_bet >= 10000000) document.getElementById('tier-3').classList.add('active');
-            else if (data.total_bet >= 1000000) document.getElementById('tier-2').classList.add('active');
-            else if (data.total_bet >= 5000) document.getElementById('tier-1').classList.add('active');
-
-            const tbody = document.getElementById('history-tbody');
-            tbody.innerHTML = '';
-            if (!data.history_list || data.history_list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:20px; color:var(--text-muted);">${t.no_record}</td></tr>`;
-            } else {
-                data.history_list.forEach(row => {
-                    const tr = document.createElement('tr');
-                    const isTotal = row.game_name === '當日加總';
-                    const isRebate = row.game_name === '當日返水';
-                    
-                    if (isTotal) tr.classList.add('row-daily-total');
-                    if (isRebate) tr.classList.add('row-daily-rebate');
-                    
-                    // 直接顯示所有日期
-                    let dateHtml = row.date_str;
-
-                    let displayGameName = t.game_map[row.game_name] || row.game_name;
-                    tr.innerHTML = `<td style="color: var(--text-muted);">${dateHtml}</td><td class="col-game">${displayGameName}</td><td class="col-amount">${fmt(row.amount)}</td>`;
-                    tbody.appendChild(tr);
-                });
+            if (type === 'missing') {
+                title = t.err_missing_title;
+                desc = t.err_missing_desc;
+            } else if (type === 'connection') {
+                title = t.err_conn_title;
+                desc = t.err_conn_desc;
             }
+
+            const errorEl = document.getElementById('error-msg');
+            errorEl.innerHTML = `<h3>${title}</h3><p>${desc}</p>${debugInfo && type !== 'missing' ? `<div class="error-debug">${debugInfo}</div>` : ''}`;
+            errorEl.classList.remove('hidden');
+            document.getElementById('dashboard-container').classList.add('hidden');
         }
 
-        async function init() {
-            detectAndSetLanguage();
-            try {
-                let userId = null;
-                const currentUrl = window.location.href;
-                const regex = /(?:[?&#/]|^)user_id=([^&#]*)/i;
-                const match = currentUrl.match(regex);
-                if (match && match[1]) userId = match[1];
-                if (!userId) {
-                    try {
-                        const decoded = decodeURIComponent(currentUrl);
-                        const m2 = decoded.match(regex);
-                        if (m2 && m2[1]) userId = m2[1];
-                    } catch(e){}
+        function renderTables() {
+            const lbBody = document.getElementById('leaderboard-body');
+            lbBody.innerHTML = '';
+            
+            currentLeaderboard.forEach(item => {
+                let rankClass = '';
+                if(item.rank === 1) rankClass = 'rank-1';
+                else if(item.rank === 2) rankClass = 'rank-2';
+                else if(item.rank === 3) rankClass = 'rank-3';
+
+                const div = document.createElement('div');
+                div.className = 'align-row';
+                const scoreText = item.total_diamond_cost > 0 ? item.total_diamond_cost.toLocaleString() : '-';
+                
+                div.innerHTML = `
+                    <span class="lb-rank ${rankClass}">${item.rank}</span>
+                    <span class="lb-score">${scoreText}</span>
+                `;
+                lbBody.appendChild(div);
+            });
+
+            const rewardsBody = document.getElementById('rewards-body');
+            rewardsBody.innerHTML = '';
+            REWARDS.forEach((val) => {
+                const div = document.createElement('div');
+                div.className = 'align-row';
+                div.innerHTML = `<div class="r-val">${val.toLocaleString()}</div>`;
+                rewardsBody.appendChild(div);
+            });
+        }
+
+        // --- 修正重點: 與 001 完全一致的 ID 解析邏輯 (含 decode) ---
+        function getUserId() {
+            let userId = null;
+            const currentUrl = window.location.href;
+            
+            // 使用 001 的 Regex，支援 ?, &, #, / 開頭
+            const regex = /(?:[?&#/]|^)user_id=([^&#]*)/i;
+            
+            const match = currentUrl.match(regex);
+            if (match && match[1]) {
+                userId = match[1];
+            }
+
+            // 如果找不到，嘗試解碼網址再找一次 (iframe 常見問題)
+            if (!userId) {
+                try {
+                    const decoded = decodeURIComponent(currentUrl);
+                    const m2 = decoded.match(regex);
+                    if (m2 && m2[1]) userId = m2[1];
+                } catch(e) {
+                    console.error("Decode URL failed", e);
                 }
-                if (!userId) { showError('missing'); return; }
+            }
 
-                const response = await fetch(`${API_URL}?user_id=${encodeURIComponent(userId)}`, {
-                    method: 'GET', redirect: 'follow', mode: 'cors', credentials: 'omit'
+            return userId;
+        }
+
+        async function fetchUserData() {
+            const userId = getUserId();
+            const errorEl = document.getElementById('error-msg');
+            const loader = document.getElementById('loading-dash');
+            const dashContainer = document.getElementById('dashboard-container');
+            
+            errorEl.classList.add('hidden');
+            dashContainer.classList.remove('hidden');
+
+            if (!userId) {
+                showError('missing');
+                renderTables();
+                return;
+            }
+
+            loader.classList.remove('hidden');
+
+            const resetDashboard = () => {
+                document.getElementById('disp-rank').textContent = '--';
+                document.getElementById('disp-total').textContent = '0';
+                ['gift', 'ticket', 'command', 'lovense'].forEach(id => {
+                    document.getElementById(`disp-${id}`).textContent = '0';
                 });
-                const json = await response.json();
-                if (json.status === 'success') renderDashboard(json.data);
-                else showError('data', json.message);
-            } catch (e) {
-                console.error(e);
-                showError('connection', e.toString());
+            };
+
+            try {
+                // --- 修正重點: 移除 URL 斜線，正確拼接參數 ---
+                const fetchUrl = `${API_BASE_URL}?user_id=${encodeURIComponent(userId)}`;
+
+                // --- 修正重點: Fetch Options 與 001 一致 ---
+                const response = await fetch(fetchUrl, {
+                    method: 'GET',
+                    redirect: 'follow', // 處理 Redirect
+                    mode: 'cors',       // 明確宣告 CORS
+                    credentials: 'omit' // 避免送出 cookie
+                });
+
+                if (response.status === 404) {
+                    resetDashboard();
+                    renderTables(); 
+                    return;
+                }
+
+                if (!response.ok) throw new Error(`API Status: ${response.status}`);
+
+                const data = await response.json();
+
+                if (data.user_stats) {
+                    document.getElementById('disp-rank').textContent = data.user_stats.rank;
+                    document.getElementById('disp-total').textContent = (data.user_stats.total_diamond_cost || 0).toLocaleString();
+                    
+                    if (data.user_stats.breakdown) {
+                        const bd = data.user_stats.breakdown;
+                        document.getElementById('disp-gift').textContent = (bd.livestream_gift_diamonds || 0).toLocaleString();
+                        document.getElementById('disp-ticket').textContent = (bd.show_ticket_diamonds || 0).toLocaleString();
+                        document.getElementById('disp-command').textContent = (bd.command_diamonds || 0).toLocaleString();
+                        document.getElementById('disp-lovense').textContent = (bd.lovense_diamonds || 0).toLocaleString();
+                    }
+                } else {
+                    resetDashboard();
+                }
+
+                if (data.leaderboard_top_10 && Array.isArray(data.leaderboard_top_10) && data.leaderboard_top_10.length > 0) {
+                    currentLeaderboard = data.leaderboard_top_10;
+                    renderTables();
+                }
+
+            } catch (err) {
+                console.error("Fetch error:", err);
+                showError('connection', err.toString());
+                resetDashboard();
+                renderTables(); 
+            } finally {
+                loader.classList.add('hidden');
             }
         }
-        init();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setLang('tc');
+            renderTables();
+            fetchUserData();
+        });
     </script>
 </body>
 </html>
